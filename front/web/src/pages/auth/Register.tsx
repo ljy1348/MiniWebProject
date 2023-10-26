@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import IUser from '../../types/auth/IUser';
 import axios from 'axios';
+import UserService from '../../services/auth/UserService';
 
 function Register() {
   // 유저
-    const [user, setUser] = useState<IUser>({username:"", password:"", name:""});
+    const [user, setUser] = useState<IUser>({userName:"", password:"", name:""});
     // 네비
     const navi = useNavigate();
 
@@ -18,7 +19,7 @@ function Register() {
     const onSubmitRegister = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(user);
-        axios.post('/api/register', user)
+        UserService.register(user)
         .then(response => {navi(-1);})
         .catch(error => {console.log(error)});
     }
@@ -35,8 +36,8 @@ function Register() {
         <input
           type="text"
           className="form-control"
-          name="username"
-          value={user.username}
+          name="userName"
+          value={user.userName}
           onChange={onchangeInput}
           />
       </div>

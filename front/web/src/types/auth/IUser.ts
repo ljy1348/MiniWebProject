@@ -1,6 +1,6 @@
 export default interface IUser {
     id?:any|null,
-    username:string,
+    userName:string,
     password:string,
     name?:string
 }

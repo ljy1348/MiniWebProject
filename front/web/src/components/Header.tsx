@@ -7,7 +7,6 @@ function Header({isLogin, setIsLogin}:{isLogin:boolean, setIsLogin:React.Dispatc
     localStorage.removeItem('token');
     localStorage.removeItem('exp');
     localStorage.removeItem('name');
-    
     setIsLogin(false);
 
   };

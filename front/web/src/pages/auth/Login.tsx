@@ -2,10 +2,11 @@ import React,{useState, useEffect} from "react";
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
 import IUser from './../../types/auth/IUser';
+import UserService from "../../services/auth/UserService";
 
 function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<boolean>>}) {
   // 유저 객체
-    const [user, setUser] = useState<IUser>({username:"",password:""});
+    const [user, setUser] = useState<IUser>({userName:"",password:""});
     // 네비
     const navi = useNavigate();
 
@@ -20,16 +21,11 @@ function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<bool
         event.preventDefault();
 
         // 로그인 정보 보내기 성공하면 리턴받은 토큰 저장 후 isLogin true로 변경 후 뒤로가기
-        axios.post('/api/login', user)
+        UserService.login(user)
         .then((response) => {
                 const token = response.headers['authorization'];
                 localStorage.setItem("token",token);
                 console.log(response);
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace('-', '+').replace('_', '/');
-                const decod = JSON.parse(window.atob(base64));
-                localStorage.setItem('exp',decod.exp);
-                localStorage.setItem('name',decod.sub);
                 setIsLogin(true);
                 navi(-1);
             })
@@ -37,13 +33,7 @@ function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<bool
         
     }
 
-    // 토큰이 없거나 만료가 되었다면 뒤로가기 함수 근데 이게 로그인에 왜 있냐
     useEffect(()=>{
-        // const now:number = Date.now() / 1000;
-        // const exp = localStorage.getItem('exp');
-        // if (now > (exp as unknown as number) && localStorage.getItem('token') != null) {
-        //     navi(-1);
-        // }
     },[])
 
 
@@ -59,8 +49,8 @@ function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<bool
         <input
           type="text"
           className="form-control"
-          name="username"
-          value={user.username}
+          name="userName"
+          value={user.userName}
           onChange={onchangeInput}
           />
       </div>

@@ -40,7 +40,13 @@ public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String userName;
     private String password;
     private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255) default 'USER'")
+    private Role role;
+
+    public enum Role {USER, ADMIN, SUPER_ADMIN}
 }

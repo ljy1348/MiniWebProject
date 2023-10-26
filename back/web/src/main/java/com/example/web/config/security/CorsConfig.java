@@ -1,4 +1,4 @@
-package com.example.web.config;
+package com.example.web.config.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -12,6 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000") // React 앱의 주소
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS") // 허용할 HTTP 메서드
-                .allowedHeaders("Content-Type", "Authorization"); // 허용할 헤더
+                .allowedHeaders("Content-Type", "Authorization")
+                .exposedHeaders("Authorization");; // 허용할 헤더
     }
 }
