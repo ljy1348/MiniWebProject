@@ -16,7 +16,7 @@ function Header({isLogin, setIsLogin}:{isLogin:boolean, setIsLogin:React.Dispatc
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to={'/'}>
-            Board
+            Home
           </Link>
           <button
             className="navbar-toggler"
@@ -32,7 +32,7 @@ function Header({isLogin, setIsLogin}:{isLogin:boolean, setIsLogin:React.Dispatc
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="navbar-brand" to={'/board/1'}>
+                <Link className="navbar-brand" to={'/board'}>
                   게시판
                 </Link>
               </li>

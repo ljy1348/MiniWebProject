@@ -24,6 +24,7 @@ function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<bool
         UserService.login(user)
         .then((response) => {
                 const token = response.headers['authorization'];
+                localStorage.removeItem('token');
                 localStorage.setItem("token",token);
                 console.log(response);
                 setIsLogin(true);

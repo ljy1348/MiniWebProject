@@ -25,6 +25,7 @@ const isTokenExp = () => {
     const exp = decod.exp;
     const now:number = Date.now() / 1000;
     if (now > Number(exp)) {
+        localStorage.removeItem('token');
         return false;
     } else {
         return true;
@@ -42,6 +43,8 @@ const getUserName = () => {
     const userName = decod.sub;
     return userName;
 }
+
+
 
 const UserService = {
     register,

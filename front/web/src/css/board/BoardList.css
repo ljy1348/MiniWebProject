@@ -1,0 +1,37 @@
+.bid{
+    width: 100px;
+}
+
+.writer{
+    width: 100px;
+}
+
+.insertTime{
+    width: 100px;
+}
+.btitle {
+    max-width: 300px;
+}
+
+.titleSpan {
+    display: inline-block;
+    max-width: 500px; 
+    overflow:hidden; 
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+    
+}
+.titleLink{
+    color:black;
+    text-decoration-line: none;
+  }
+
+.titleLink:hover{
+    color:gray;
+    text-decoration-line: underline ;
+  }
+.commentCount{
+    color: skyblue;
+    font-size: 12px;
+}
