@@ -6,11 +6,13 @@ import '../../css/board/BoardWrite.css';
 import UserService from '../../services/auth/UserService';
 import BoardService from '../../services/BoardService';
 
-function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateAction<boolean>>}) {
+function BoardEdit({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateAction<boolean>>}) {
 
-  const [board, setBoard] = useState({title:"", content:"", isFile:false});
+
+  const [board, setBoard] = useState({bid:null,title:"", content:"", isFile:false});
   const [fileList, setFileList] = useState<File[] | null>([]);
   const [fileCount, setFileCount] = useState<number[]>([0]);
+  const [render, setRender] = useState<boolean>(false);
   const {bid} = useParams();
   const navi = useNavigate();
 
@@ -21,6 +23,20 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
         setIsLogin(false);
         navi("/login")
       }
+      BoardService.get(Number(bid))
+      .then((response:any)=>{
+        setBoard(response.data);
+        console.log(UserService.getUserName());
+        console.log(response.data.writer);
+        if (UserService.getUserName() != response.data.writer) {
+          alert("아이디가 다릅니다.")
+          navi(-1);
+        }
+        setRender(true);
+      })
+      .catch((e:Error)=>{
+        console.log(e);
+      })
     },[]);
 
     // 이미지 붙여넣기
@@ -78,7 +94,9 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
   }
 
 
-
+  if (!render) {
+    return <div></div>
+  }
   return (
     <div className='container'>
       <h1>글쓰기</h1>
@@ -98,7 +116,7 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
           extraPlugins: [MyCustomUploadAdapterPlugin],
         }}
         editor={ClassicEditor}
-        data="<p></p>"
+        data={board.content}
         onReady={(editor) => {
         }}
         onChange={(event, editor:any) => {
@@ -109,9 +127,9 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
       />
       <br/>
           {/* <input type="file" name="filename" onChange={onChangeFile}></input> */}
-          <button type='submit' onClick={onClickSubmit}>저장</button>
+          <button type='submit' onClick={onClickSubmit}>수정</button>
     </div>
   )
 }
 
-export default BoardWrite
+export default BoardEdit

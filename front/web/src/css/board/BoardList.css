@@ -15,7 +15,8 @@
 
 .titleSpan {
     display: inline-block;
-    max-width: 500px; 
+    /* width:10%; */
+    max-width: 70%; 
     overflow:hidden; 
     text-overflow:ellipsis;
     white-space:nowrap;

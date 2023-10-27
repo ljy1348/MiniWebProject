@@ -1,4 +1,4 @@
-export default interface IBoardList {
+export default interface IBoard {
     bid ?: any | null,
     title : string,
     writer : string,

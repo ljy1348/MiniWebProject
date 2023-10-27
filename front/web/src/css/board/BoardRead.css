@@ -1,0 +1,21 @@
+img {
+    max-width: 100%;
+    height: auto;
+    }
+
+.title {
+    max-width: 100px;
+    text-overflow:ellipsis;
+    word-wrap: break-word;
+}
+
+.boardContent {
+    /* display: inline-block; */
+    max-width: 100px;
+    text-overflow:ellipsis;
+    word-wrap: break-word;
+}
+
+.contentTr {
+    max-width: 100px;
+}

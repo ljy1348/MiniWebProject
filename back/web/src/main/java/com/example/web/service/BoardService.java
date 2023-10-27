@@ -63,4 +63,8 @@ public class BoardService {
             return false;
         }
     }
+
+    public Optional<Board> findById(long bid) {
+        return boardRepository.findById(bid);
+    }
 }

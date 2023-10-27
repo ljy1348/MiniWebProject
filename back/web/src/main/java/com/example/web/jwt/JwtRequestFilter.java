@@ -35,10 +35,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         String token = header.substring(7);
-
+        log.info("로그 : "+token);
         try {
         String username = jwtService.extractUsername(token);
-            List<SimpleGrantedAuthority> list = jwtService.getAuthoritiesStringFromToken(token);
+        List<SimpleGrantedAuthority> list = jwtService.getAuthoritiesStringFromToken(token);
+        log.info("로그 : "+username);
             // 토큰 검증 로직
             if (!jwtService.isTokenExpired(token)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

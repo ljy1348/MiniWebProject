@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * packageName : com.example.web.controller
@@ -83,6 +84,20 @@ public class BoardController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{bid}")
+    public ResponseEntity<?> findById(@PathVariable long bid) {
+        try {
+            Optional<Board> optional = boardService.findById(bid);
+            if (optional.isPresent()) {
+                return new ResponseEntity<>(optional.get(),HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -9,6 +9,7 @@ import UserService from './services/auth/UserService';
 import BoardList from './pages/board/BoardList';
 import BoardWrite from './pages/board/BoardWrite';
 import BoardRead from './pages/board/BoardRead';
+import BoardEdit from './pages/board/BoardEdit';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -40,7 +41,7 @@ function App() {
         <Route path='/board' element={<BoardList/>}></Route>
         <Route path='/board/:bid' element={<BoardRead/>}></Route>
         <Route path='/board/write' element={<BoardWrite setIsLogin={setIsLogin}/>}></Route>
-        <Route path='/board/write/:bid' element={<BoardWrite setIsLogin={setIsLogin}/>}></Route>
+        <Route path='/board/write/:bid' element={<BoardEdit setIsLogin={setIsLogin}/>}></Route>
         
 
       </Routes>
