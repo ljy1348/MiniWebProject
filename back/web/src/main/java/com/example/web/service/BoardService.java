@@ -44,15 +44,8 @@ public class BoardService {
 
     public Board save(Board board) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        log.info("----------------------------"+auth.getName());
-        Optional<User> optional = userRepository.findByUserName(auth.getName());
-        if (optional.isPresent()) {
-            User user = optional.get();
-        board.setWriter(user.getName());
+        board.setWriter(auth.getName());
         return boardRepository.save(board);
-        } else {
-            throw new IllegalArgumentException("사용자가 존재하지 않습니다.");
-        }
     }
 
     public boolean delete(long bid) {

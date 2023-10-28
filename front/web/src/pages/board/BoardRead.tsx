@@ -70,7 +70,7 @@ function BoardRead() {
       <th className='text-start' colSpan={2}>첨부파일 : <a href={downURL} download={board.attachmentsData}>{board.attachmentsData}</a></th>
     </tr> */}
 
-      {/* <BoardComment id={Number(id)}></BoardComment> */}
+      <BoardComment bid={Number(bid)}></BoardComment>
       <tr><td colSpan={2}>
 <button onClick={()=>{navi(-1)}}>돌아가기</button>
         </td></tr>

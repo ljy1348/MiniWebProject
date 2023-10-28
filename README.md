@@ -94,3 +94,12 @@ CKEditor 5: GPL-2, Commercial License (https://github.com/ckeditor/ckeditor5)
 스프링 시큐리티 적용.  
 jwt filter, service 적용.  
 로그인/ 회원가입 기능 완료.  
+
+# 작업 중 발생한 에러
+ERROR 24656 --- [nio-8080-exec-3] o.h.engine.jdbc.spi.SqlExceptionHelper   : Statement.executeQuery() cannot issue statements that do not produce result sets.
+발생 상황 - 쿼리 어노테이션을 select문 이외에(쿼리의 결과가 집합으로 표현될 수 없을때) 사용했을 때.
+예시 - update문, delete문 등
+해결 방법 - 쿼리 어노테이션 위에 @Modifying, @Transactional을 추가해주면 해결된다.
+이유 - 기본적으로 하이버네이트는 데이터를 반환 하려 하는데, update 같은 경우에는 반환되는 데이터가 없음. 결과만 반환됨.
+    따라서 @Modifying을 사용하여 반환되는 데이터가 없음을 알려준다.
+    @Transactional을 추가하는 이유는 작업을 하나의 트랜잭션으로 만들어 데이터의 일관성을 보장하기 위해서.

@@ -27,9 +27,9 @@ function BoardList() {
       BoardService.getAll(page-1,pageSize)
       .then((response:any)=>{
         console.log(response);
-        const {boardList, totalpages} = response.data
+        const {boardList, totalPages} = response.data
         setBoardList(boardList);
-        setMaxPage(totalpages);
+        setMaxPage(totalPages);
       })
       .catch(error=>{console.log(error)})
     },[page]);

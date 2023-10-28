@@ -1,4 +1,5 @@
 import IBoard from "../types/board/IBoard";
+import IBoardComment from "../types/board/IBoardComment";
 import Http from "../utils/HttpCommon";
 import Httpt from "../utils/HttpToken";
 
@@ -27,6 +28,25 @@ const remove = (bid:number) => {
         'Authorization': localStorage.getItem('token')}});
 };
 
+const boardCommendGet = (bid:number) => {
+    return Http.get("/board/comment/"+bid);
+};
+
+const boardCommentAdd = (boardComment:IBoardComment, bid:number) => {
+    return Http.post("/board/user/comment", boardComment, {headers: {
+        'Authorization': localStorage.getItem('token')}});
+};
+
+const boardCommentEdit = (boardComment:IBoardComment) => {
+    return Http.put("/board/user/comment/edit", boardComment, {headers: {
+        'Authorization': localStorage.getItem('token')}});
+};
+
+const boardCommentDelete = (bcid:number) => {
+    return Http.delete("/board/user/comment/delete/"+bcid, {headers: {
+        'Authorization': localStorage.getItem('token')}});
+};
+
 const temp = () => {};
 
 
@@ -35,7 +55,11 @@ const BoardService = {
     write,
     get,
     edit,
-    remove
+    remove,
+    boardCommendGet,
+    boardCommentAdd,
+    boardCommentEdit,
+    boardCommentDelete
 }
 
 export default BoardService;
