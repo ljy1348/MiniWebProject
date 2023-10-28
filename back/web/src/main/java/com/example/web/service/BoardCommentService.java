@@ -22,7 +22,7 @@ public class BoardCommentService {
     BoardRepository boardRepository;
 
     public List<BoardComment> findAllByBid(long bid) {
-        return boardCommentRepository.findAllByBid(bid);
+        return boardCommentRepository.findAllByBidOrderByParentBcid(bid);
     }
 
     public BoardComment addComment(BoardComment boardComment) {
@@ -48,6 +48,7 @@ public class BoardCommentService {
         if (optional.isPresent()) {
             if (auth.getName().equals(optional.get().getCommentWriter())) {
                 boardCommentRepository.deleteById(bcid);
+                boardRepository.deleteCommentCount(optional.get().getBid());
                 return true;
             } else {
                 throw new UsernameNotFoundException("작성자가 아닙니다.");

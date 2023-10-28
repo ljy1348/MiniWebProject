@@ -1,6 +1,6 @@
 export default interface IBoardComment {
     bcid ?: any | null,
-    commentWriter ?: string | null,
+    commentWriter ?: string,
     commentContent : string,
     bid ?: any | null,
     isReComment : boolean,

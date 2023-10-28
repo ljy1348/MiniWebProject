@@ -35,5 +35,12 @@ public class BoardComment extends BaseTimeEntity {
     private String parentWriter;
     @Column(columnDefinition = "boolean default false")
     private Boolean isReComment;
+
+    @PostPersist
+    public void setAnotherColumn() {
+        if (this.parentBcid == null) {
+            this.parentBcid = this.bcid;
+        }
+    }
 }
 

@@ -7,7 +7,7 @@ import BoardService from "../../services/BoardService";
 import IBoardComment from "../../types/board/IBoardComment";
 
 function BoardComment({ bid }:{bid:number}) {
-  const initReCommnet = { bid:0, commentContent: "", isReComment:0, parentBcid:0 };
+  const initReCommnet = { bid:0, commentContent: "", isReComment:false, parentBcid:0, parentWriter:"" };
   const initComment = [{ bcid: 0, commentWriter: "", commentContent: "", isReComment:false, parentBcid:0 }];
   const [comment, setComment] = useState<Array<IBoardComment>>(initComment);
   const [username, setUsername] = useState("");
@@ -24,7 +24,7 @@ function BoardComment({ bid }:{bid:number}) {
   const [addComment, setAddComment] = useState({bid:bid,commentContent:"",isReComment:false})
   const [reder, setRender] = useState(0);
   const [rebcidx, setRebcidx] = useState(-1);
-  const [reComment, setRecomment] = useState(initReCommnet);
+  const [reComment, setRecomment] = useState<IBoardComment>(initReCommnet);
 
   // 댓글 목록 불러오기 및 댓글과 토큰 아이디 일치하면 수정/삭제 버튼 표시하기
   useEffect(() => {
@@ -69,12 +69,14 @@ function BoardComment({ bid }:{bid:number}) {
   };
 
   // 대댓글 작성 화면 호출
-  const onClickComment = (bcid:number, parentBcid:number) =>{
-    if (rebcidx > 0) setRebcidx(-1);
+  const onClickComment = (bcid:number, parentBcid:number, commentWriter:any) =>{
+    if (rebcidx === bcid) {
+      setRebcidx(-1);
+      setRecomment(initReCommnet);
+    }
     else {
-
       setRebcidx(bcid);
-      setRecomment({...reComment, bid:bid,parentBcid:parentBcid, isReComment:1})
+      setRecomment({...reComment, bid:bid,parentBcid:parentBcid, isReComment:true, parentWriter:commentWriter})
       setRender(reder+1);
     }
   };
@@ -86,7 +88,7 @@ function BoardComment({ bid }:{bid:number}) {
 
   // 대댓글 서브밋 함수
   const onSubmitReComment = () => {
-    axios.post("/board/user/comment/add", reComment, {headers: { 'Authorization': localStorage.getItem('token') }})
+    BoardService.boardCommentAdd(reComment, bid)
     .then(response=>{setRender(reder+1); setRebcidx(-1); setRecomment(initReCommnet)})
     .catch(error=>{console.log(error)});
   }
@@ -128,7 +130,7 @@ function BoardComment({ bid }:{bid:number}) {
                   <>
                     <td style={{ width: "80%" }}>
                       <div
-                      onClick={()=>onClickComment(val.bcid, val.parentBcid)}
+                      onClick={()=>onClickComment(val.bcid, val.parentBcid, val.commentWriter)}
                         style={{
                           width: "100%",
                           maxWidth: "80%",
