@@ -103,4 +103,14 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    테스트 코드 나중에 삭제
+    @Autowired
+    NotificationController notificationController;
+
+        @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        notificationController.sendNotification("a","aaaaa");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

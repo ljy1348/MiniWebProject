@@ -6,7 +6,7 @@ import UserService from "../../services/auth/UserService";
 import BoardService from "../../services/BoardService";
 import IBoardComment from "../../types/board/IBoardComment";
 
-function BoardComment({ bid }:{bid:number}) {
+function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
   const initReCommnet = { bid:0, commentContent: "", isReComment:false, parentBcid:0, parentWriter:"" };
   const initComment = [{ bcid: 0, commentWriter: "", commentContent: "", isReComment:false, parentBcid:0 }];
   const [comment, setComment] = useState<Array<IBoardComment>>(initComment);
@@ -88,7 +88,7 @@ function BoardComment({ bid }:{bid:number}) {
 
   // 대댓글 서브밋 함수
   const onSubmitReComment = () => {
-    BoardService.boardCommentAdd(reComment, bid)
+    BoardService.boardCommentAdd(reComment, "")
     .then(response=>{setRender(reder+1); setRebcidx(-1); setRecomment(initReCommnet)})
     .catch(error=>{console.log(error)});
   }
@@ -100,7 +100,7 @@ function BoardComment({ bid }:{bid:number}) {
 
   // 댓글 등록 서브밋
   const onSubmitAddComment = () =>{
-    BoardService.boardCommentAdd(addComment, bid)
+    BoardService.boardCommentAdd(addComment, boardWriter)
     .then(response=>{setRender(reder+1); setAddComment({...addComment, commentContent:""})})
     .catch(error=>{console.log(error)});
   };

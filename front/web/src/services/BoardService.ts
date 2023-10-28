@@ -32,8 +32,8 @@ const boardCommendGet = (bid:number) => {
     return Http.get("/board/comment/"+bid);
 };
 
-const boardCommentAdd = (boardComment:IBoardComment, bid:number) => {
-    return Http.post("/board/user/comment", boardComment, {headers: {
+const boardCommentAdd = (boardComment:IBoardComment, boardWriter:string) => {
+    return Http.post("/board/user/comment?boardWriter="+boardWriter, boardComment, {headers: {
         'Authorization': localStorage.getItem('token')}});
 };
 

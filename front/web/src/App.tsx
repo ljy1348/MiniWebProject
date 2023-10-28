@@ -13,17 +13,40 @@ import BoardEdit from './pages/board/BoardEdit';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [isNotification, setIsNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
 
+  // 토큰 만료 확인
   useEffect(()=>{
     if (UserService.isTokenExp()) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
+    } 
+  },[]);
+
+  // 로그인 하면 sse연결하기
+  useEffect(()=>{
+    if (isLogin) {
+      const username = UserService.getUserName();
+    const eventSource = new EventSource(`http://localhost:8080/api/notification?username=${username}`);
+
+
+    eventSource.onmessage = (event) => {
+      // console.log("메세지왔음");
+      setNotificationMessage(event.data);
+      setIsNotification(true);
+      setTimeout(() => {
+        setIsNotification(false);
+      }, 2000);
+    };
+
+    eventSource.close = () => {
+      console.log("sse 끊김");
     }
 
-
-        
-  });
+    }
+  },[isLogin])
 
   return (
     <div className="App">
@@ -45,6 +68,10 @@ function App() {
         
 
       </Routes>
+      {isNotification &&
+    <div className="popup">
+      <span className="popupText">댓글이 달렸습니다 : {notificationMessage}</span>
+    </div>}
     </div>
   );
 }

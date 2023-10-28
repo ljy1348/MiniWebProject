@@ -18,6 +18,9 @@ public class BoardCommentController {
     @Autowired
     BoardCommentService boardCommentService;
 
+    @Autowired
+    NotificationController notificationController;
+
     @GetMapping("/comment/{bid}")
     public ResponseEntity<Object> findAllByBid(@PathVariable long bid) {
         try {
@@ -29,9 +32,10 @@ public class BoardCommentController {
     }
 
     @PostMapping("/user/comment")
-    public ResponseEntity<Object> addComment(@RequestBody BoardComment boardComment) {
+    public ResponseEntity<Object> addComment(@RequestBody BoardComment boardComment, @RequestParam String boardWriter) {
             try {
         BoardComment boardComment1 = boardCommentService.addComment(boardComment);
+        notificationController.sendNotification(boardWriter,boardComment.getCommentContent());
         return new ResponseEntity<>(boardComment1, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,7 +48,6 @@ public class BoardCommentController {
             boolean check = boardCommentService.editComment(boardComment);
             if (check) {
             return new ResponseEntity<>(HttpStatus.OK);
-
             }else {
                 return new ResponseEntity<>("아이디가 일치하지 않습니다.",HttpStatus.NOT_MODIFIED);
             }
