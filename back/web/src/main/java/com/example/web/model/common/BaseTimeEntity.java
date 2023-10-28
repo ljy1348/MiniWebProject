@@ -53,7 +53,6 @@ public abstract class BaseTimeEntity {
         //해당 엔티티 수정 하기 전
     void onPreUpdate(){
         this.updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.insertTime = this.updateTime;
         this.deleteYn = "N";
     }
 }
