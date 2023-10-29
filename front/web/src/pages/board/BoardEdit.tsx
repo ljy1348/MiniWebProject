@@ -26,8 +26,6 @@ function BoardEdit({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActio
       BoardService.get(Number(bid))
       .then((response:any)=>{
         setBoard(response.data);
-        console.log(UserService.getUserName());
-        console.log(response.data.writer);
         if (UserService.getUserName() != response.data.writer) {
           alert("아이디가 다릅니다.")
           navi(-1);
