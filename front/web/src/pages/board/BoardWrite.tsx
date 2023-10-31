@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../../css/board/BoardWrite.css';
 import UserService from '../../services/auth/UserService';
 import BoardService from '../../services/BoardService';
+import FileService from '../../services/FileService';
 
 function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateAction<boolean>>}) {
 
@@ -23,25 +24,57 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
       }
     },[]);
 
-    // 이미지 붙여넣기
-    function MyCustomUploadAdapterPlugin(editor:any) {
-      editor.plugins.get("FileRepository").createUploadAdapter = (loader:any) => {
+    // // 이미지 붙여넣기
+    // function MyCustomUploadAdapterPlugin(editor:any) {
+    //   editor.plugins.get("FileRepository").createUploadAdapter = (loader:any) => {
+    //     return {
+    //       upload: async () => {
+    //         const file = await loader.file;
+    //         const reader = new FileReader();
+    //         const fileType:string = file.type;
+    //         return new Promise((resolve, reject) => {
+    //           reader.addEventListener("load", () => {
+    //             resolve({ default: reader.result });
+    //           });
+    //           reader.addEventListener("error", reject);
+    //           reader.readAsDataURL(file);
+    //         });
+    //       },
+    //     };
+    //   };
+    // }
+
+    // 이미지 업로드 함수
+    function MyCustomUploadAdapterPlugin(editor: any) {
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
         return {
-          upload: async () => {
-            const file = await loader.file;
-            const reader = new FileReader();
-            const fileType:string = file.type;
+          upload: () => {
             return new Promise((resolve, reject) => {
-              reader.addEventListener("load", () => {
-                resolve({ default: reader.result });
-              });
-              reader.addEventListener("error", reject);
-              reader.readAsDataURL(file);
+              loader.file
+                .then((file: any) => {
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  formData.append('writer', UserService.getUserName());
+                  
+                  // 서버에 파일을 업로드
+                  return FileService.add(formData);
+                })
+                .then((response: any) => {
+                  console.log(response);
+                  resolve({ default: response.data });  // 성공 시 resolve 호출
+                })
+                .catch((error: Error) => {
+                  console.log(error);
+                  reject(error);  // 실패 시 reject 호출
+                });
             });
           },
         };
       };
     }
+    
+
+
 
     // input 파일 변할때
     const onChangeFile = (e:any) => {
@@ -108,7 +141,7 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
         onFocus={(event, editor) => {}}
       />
       <br/>
-          {/* <input type="file" name="filename" onChange={onChangeFile}></input> */}
+          <input type="file" name="filename" onChange={onChangeFile}></input>
           <button type='submit' onClick={onClickSubmit}>저장</button>
     </div>
   )

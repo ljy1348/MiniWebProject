@@ -7,6 +7,7 @@ import BoardComment from './BoardComment';
 import UserService from '../../services/auth/UserService';
 import BoardService from '../../services/BoardService';
 import BoardWrite from './BoardWrite';
+import IFileList from '../../types/board/IFileList';
 
 
 function BoardRead() {
@@ -15,14 +16,16 @@ function BoardRead() {
   const navi = useNavigate();
   const [board, setBoard] = useState(initBoardList);
   const {bid} = useParams();
-  const [downURL, setDownURL] = useState("");
+  const [fileList, setFileList] = useState<Array<IFileList>>([]);
   const [render, setRender] = useState(0);
   const [name, setName] = useState("");
 
   useEffect(()=>{
     BoardService.get(Number(bid))
     .then((response:any) => {
-      setBoard(response.data);
+      const {board, list} = response.data;
+      setBoard(board);
+      setFileList(list);
       setName(UserService.getUserName());
       console.log(response);
       // const byteCharacters = atob(response.data.attachments);
@@ -67,9 +70,13 @@ function BoardRead() {
     <tr className='contentTr'>
       <th className='text-start boardContent' colSpan={2}><span dangerouslySetInnerHTML={{__html: board.content}} className='boardContent'></span></th>
     </tr>
-    {/* <tr>
-      <th className='text-start' colSpan={2}>첨부파일 : <a href={downURL} download={board.attachmentsData}>{board.attachmentsData}</a></th>
-    </tr> */}
+    {
+      fileList && fileList.map((data, idx)=>{
+      return (  <tr key={idx}>
+      <th className='text-start' colSpan={2}>첨부파일 : <a href={"http://localhost:8080/api/img/"+data.fid} download>{data.fileName}</a></th>
+    </tr>)
+      })
+    }
 
       <BoardComment bid={Number(bid)} boardWriter={board.writer}></BoardComment>
       <tr><td colSpan={2}>

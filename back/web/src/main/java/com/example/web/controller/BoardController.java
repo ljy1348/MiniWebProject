@@ -1,9 +1,12 @@
 package com.example.web.controller;
 
+import com.example.web.model.dto.FileIdDto;
 import com.example.web.model.dto.board.BoardListDto;
 import com.example.web.model.entity.Board;
+import com.example.web.model.entity.File;
 import com.example.web.repository.BoardRepository;
 import com.example.web.service.BoardService;
+import com.example.web.service.FileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,6 +42,8 @@ import java.util.Optional;
 public class BoardController {
     @Autowired
     BoardService boardService;
+    @Autowired
+    FileService fileService;
 
     @GetMapping("")
     public ResponseEntity<?> findAll(Pageable pageable) {
@@ -59,7 +65,13 @@ public class BoardController {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Board board1 = objectMapper.readValue(board, Board.class);
-            boardService.save(board1);
+            Board boardSave = boardService.save(board1);
+            File file1 = new File();
+            file1.setFileName(file.getOriginalFilename());
+            file1.setFileType(file.getContentType());
+            file1.setFileData(file.getBytes());
+            file1.setBid(boardSave.getBid());
+            fileService.addFile(file1);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -96,7 +108,11 @@ public class BoardController {
         try {
             Optional<Board> optional = boardService.findById(bid);
             if (optional.isPresent()) {
-                return new ResponseEntity<>(optional.get(),HttpStatus.OK);
+                List<FileIdDto> list = fileService.findFidByBid(bid);
+                Map<String, Object> map = new HashMap<>();
+                map.put("board", optional.get());
+                map.put("list", list);
+                return new ResponseEntity<>(map,HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
