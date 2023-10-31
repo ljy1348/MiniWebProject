@@ -23,4 +23,5 @@ public interface BoardListDto {
     Integer getVote();
     Boolean getIsPin();
     Boolean getIsFile();
+    String getContent();
 }

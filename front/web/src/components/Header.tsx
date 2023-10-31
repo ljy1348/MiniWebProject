@@ -36,6 +36,12 @@ function Header({isLogin, setIsLogin}:{isLogin:boolean, setIsLogin:React.Dispatc
                 </Link>
               </li>
               <li className="nav-item"></li>
+              <li className="nav-item">
+                <Link className="navbar-brand" to={'/chat'}>
+                  채팅
+                </Link>
+              </li>
+              <li className="nav-item"></li>
             </ul>
             {/* <button className="m-1" onClick={onClickTest}> 테스트 </button> */}
             {!isLogin && (

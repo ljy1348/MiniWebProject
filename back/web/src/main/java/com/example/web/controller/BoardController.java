@@ -34,6 +34,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/board")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
     @Autowired
     BoardService boardService;

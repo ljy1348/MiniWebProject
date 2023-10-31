@@ -2,6 +2,7 @@ package com.example.web.controller;
 
 import com.example.web.model.entity.User;
 import com.example.web.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     @Autowired
     UserService userService;
@@ -32,6 +35,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User user, HttpServletResponse response) {
+        log.info("로그인 요청");
         try {
             String st = userService.login(user);
             response.addHeader("Authorization", "Bearer " + st);

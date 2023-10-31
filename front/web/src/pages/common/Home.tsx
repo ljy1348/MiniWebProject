@@ -3,7 +3,7 @@ import UserService from '../../services/auth/UserService'
 import { error } from 'console'
 import axios from 'axios'
 
-function Home() {
+function Home({ready}:{ready:any}) {
 
   // useEffect(()=>{
   //   UserService.test()
@@ -13,7 +13,12 @@ function Home() {
   // },[])
 
   const onClickEvent = () =>{
-    axios.get("http://localhost:8080/api/board/test")
+    axios.get("/api/board/test")
+    .then((response)=>{console.log(response)})
+    .catch((response)=>{console.log(response)});
+
+    // ready();
+
   }
 
   return (
