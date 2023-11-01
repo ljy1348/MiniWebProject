@@ -22,8 +22,11 @@ function Home({ready}:{ready:any}) {
   }
 
   return (
-    <div>Home<br/>
-    <button onClick={onClickEvent}>눌러라!</button>
+    <div>알림 테스트<br/>
+    id : a, pw : a 로 로그인 해주세요.
+    <br/>
+
+    <button onClick={onClickEvent}>알림 전송</button>
     </div>
   )
 }

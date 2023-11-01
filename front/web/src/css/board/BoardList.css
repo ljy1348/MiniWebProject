@@ -36,3 +36,7 @@
     color: skyblue;
     font-size: 12px;
 }
+
+.listImg {
+    max-width: 5px;
+}

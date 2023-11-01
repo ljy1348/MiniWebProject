@@ -2,4 +2,9 @@
     border: solid 1px;
     height: 500px;
     width: 500px;
+    overflow: auto;
+}
+
+.chatInput{
+    width: 450px;
 }

@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface FileRepository extends JpaRepository<File, Long> {
-    List<FileIdDto>  findAllByBid(long bid);
+    List<FileIdDto>  findAllByBidAndIsImage(long bid, boolean isImage);
+
+    List<File> findByFidIn(List<Long> fid);
 }

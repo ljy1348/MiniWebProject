@@ -15,7 +15,8 @@ function BoardList() {
         isFile: false,
         isPin: false,
         views:0,
-        commentCount: 0}]
+        commentCount: 0,
+      imgFid : 0}]
  
     const[boardList, setBoardList] = useState<Array<IBoardList>>([]);
     const[page, setPage] = useState(1);
@@ -61,8 +62,10 @@ function BoardList() {
         <tr key={idx}>
         <td className='bid'>{val.bid}</td>
         <td className='btitle text-start'><Link to={"/board/"+val.bid} className='titleLink'><span className='titleSpan'>{val.title}</span></Link> <span className='commentCount'>{val.commentCount}</span>
+        {val.imgFid > 0 &&
+        <span className='listImg'><img src={'http://59.28.90.58:3000/api/img/'+val.imgFid} width={"30px"}></img></span>}
         {val.isFile &&
-        <span><img src=''></img></span>}
+        <span><img src='/assets/img/file.PNG'></img></span>}
         </td> 
         <td className='writer'>{val.writer}</td>
         <td className='insertTime'>{time}</td>

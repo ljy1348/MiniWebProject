@@ -24,4 +24,5 @@ public interface BoardListDto {
     Boolean getIsPin();
     Boolean getIsFile();
     String getContent();
+    Long getImgFid();
 }

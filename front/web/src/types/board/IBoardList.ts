@@ -7,5 +7,6 @@ export default interface IBoardList {
     isPin : boolean,
     isFile : boolean,
     commentCount : number,
-    vote : number
+    vote : number,
+    imgFid : number
 }

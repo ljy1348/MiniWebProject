@@ -53,4 +53,6 @@ public class Board extends BaseTimeEntity {
     private Boolean isFile;
     @Column(columnDefinition = "boolean default false")
     private Boolean isPin;
+    @Column(columnDefinition = "int default 0")
+    private Long imgFid;
 }

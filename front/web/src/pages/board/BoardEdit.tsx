@@ -25,10 +25,12 @@ function BoardEdit({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActio
       }
       BoardService.get(Number(bid))
       .then((response:any)=>{
-        setBoard(response.data);
-        if (UserService.getUserName() != response.data.writer) {
+        const {board, list} = response.data;
+        setBoard(board);
+        if (UserService.getUserName() != board.writer) {
+          // console.log(UserService.getUserName(), response.data.writer);
           alert("아이디가 다릅니다.")
-          navi(-1);
+          navi("/board/"+board.bid);
         }
         setRender(true);
       })

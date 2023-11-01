@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.FileNotFoundException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,10 +43,13 @@ public class FileController {
             log.info("이미지 업로드 3");
 
             // 다운로드 URL 생성
-            String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/api/img/")
-                    .path(savedFile.getFid().toString())
-                    .toUriString();
+            String customHost = "http://59.28.90.58:8080";
+            String downloadUrl = customHost + "/api/img/" + savedFile.getFid().toString();
+//
+//            String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                    .path("/api/img/")
+//                    .path(savedFile.getFid().toString())
+//                    .toUriString();
             log.info("이미지 업로드 4");
             return new ResponseEntity<>(downloadUrl,HttpStatus.OK);
         } catch (Exception e) {
@@ -62,9 +66,10 @@ public class FileController {
             if (optional.isPresent()) {
                 File file = optional.get();
             log.info("이미지 불러오기3");
+                String encodedFileName = URLEncoder.encode(file.getFileName(), "UTF-8").replaceAll("\\+", "%20");
                 return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType("application/octet-stream"))
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;  filename*=UTF-8''" + encodedFileName)
                         .body(file.getFileData());
             } else {
             log.info("이미지 불러오기4");
@@ -77,20 +82,22 @@ public class FileController {
         }
     }
 
+//    다운로드 파일
     @PostMapping("/down/{fid}")
     public ResponseEntity<Object> downBybid(@PathVariable Long fid) {
         try {
-            log.info("이미지 불러오기1");
+            log.info("파일 다운1 ");
             Optional<File> optional = fileService.findById(fid);
-            log.info("이미지 불러오기2");
+            log.info("파일 다운2");
             if (optional.isPresent()) {
                 File file = optional.get();
-                log.info("이미지 불러오기3");
+                log.info("파일 다운3");
+                String encodedFileName = URLEncoder.encode(file.getFileName(), "UTF-8").replaceAll("\\+", "%20");
                 return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;  filename*=UTF-8''" + encodedFileName)
                         .body(file.getFileData());
             } else {
-                log.info("이미지 불러오기4");
+                log.info("파일 다운4");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {

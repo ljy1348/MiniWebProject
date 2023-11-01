@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,18 +61,36 @@ public class BoardController {
         }
     }
 
+    @Transactional
     @PostMapping("/user")
     public ResponseEntity<Object> save(@RequestParam(name = "file", required = false) MultipartFile file, @RequestParam("board") String board) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
+//            board객체 가져오기
             Board board1 = objectMapper.readValue(board, Board.class);
+//            게시물 내용에 img파일이 있으면 첫번째 이미지의 fid를 board1의 imgfid에 세팅
+//            board1 = fileService.uploadImg(board1);
+//            board객체 db에 저장하기
             Board boardSave = boardService.save(board1);
+//            저장된 객체의 bid 가져오기
+            final long BID = boardSave.getBid();
+//            파일이 같이 왔다면
+            if (file != null) {
             File file1 = new File();
+//            파일 이름 설정
             file1.setFileName(file.getOriginalFilename());
+//            파일 타입 설정
             file1.setFileType(file.getContentType());
+//            파일 데이터 설정
             file1.setFileData(file.getBytes());
-            file1.setBid(boardSave.getBid());
+//            파일 bid 설정
+            file1.setBid(BID);
+//            file 객체 db에 저장
             fileService.addFile(file1);
+            }
+            Long firstImg = fileService.uploadImg(boardSave);
+            boardSave.setImgFid(firstImg);
+//            에러가 없다면 ok 리턴
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
