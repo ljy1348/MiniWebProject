@@ -63,7 +63,8 @@ function BoardList() {
         <td className='bid'>{val.bid}</td>
         <td className='btitle text-start'><Link to={"/board/"+val.bid} className='titleLink'><span className='titleSpan'>{val.title}</span></Link> <span className='commentCount'>{val.commentCount}</span>
         {val.imgFid > 0 &&
-        <span className='listImg'><img src={'http://59.28.90.58:3000/api/img/'+val.imgFid} width={"30px"}></img></span>}
+        // <span className='listImg'><img src={'http://59.28.90.58:3000/api/img/'+val.imgFid} width={"30px"}></img></span>}
+        <span><img src='/assets/img/picture.PNG'></img></span>}
         {val.isFile &&
         <span><img src='/assets/img/file.PNG'></img></span>}
         </td> 

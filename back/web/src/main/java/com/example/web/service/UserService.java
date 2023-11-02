@@ -41,13 +41,13 @@ public class UserService implements UserDetailsService {
         );
     }
 
-    public void registry(User user) {
+    public User registry(User user) {
         if (user.getRole() == null) {
             user.setRole(User.Role.USER);
         }
         System.out.println(user.getUserName());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public String login(User user) {

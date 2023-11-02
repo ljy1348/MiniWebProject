@@ -60,8 +60,8 @@ function BoardRead() {
       <table className="table">
   <thead>
     <tr>
-      <td className='title' >{board.title}</td>
-      <td style={{width:'110px'}}><span>{ board.writer ==  name &&
+      <td className='title' >{board.title}
+      <span style={{width:'110px', float:"right"}}>{ board.writer ==  name &&
 <><button className='btn btn-sm' onClick={onClickEdit}>수정</button><button className='btn btn-sm' onClick={onClickDelete}>삭제</button></>
 }</span></td>
     </tr>

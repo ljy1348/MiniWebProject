@@ -11,11 +11,14 @@ import BoardWrite from './pages/board/BoardWrite';
 import BoardRead from './pages/board/BoardRead';
 import BoardEdit from './pages/board/BoardEdit';
 import Chat from './pages/other/Chat';
+import UserInfo from './pages/auth/UserInfo';
+import Admin from './pages/auth/Admin';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isNotification, setIsNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   // const [eventSource, setEventSource] = useState<EventSource>();
   let eventSource:EventSource;
 
@@ -68,7 +71,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header isLogin={isLogin} setIsLogin={setIsLogin}/>
+      <Header isLogin={isLogin} setIsLogin={setIsLogin} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>
 
       <Routes>
         {/* 홈 */}
@@ -76,7 +79,9 @@ function App() {
 
         {/* 회원가입/로그인 */}
         <Route path='/register' element={<Register/>}></Route>
-        <Route path='/login' element={<Login setIsLogin={setIsLogin}/>}></Route>
+        <Route path='/login' element={<Login setIsLogin={setIsLogin} setIsAdmin={setIsAdmin}/>}></Route>
+        <Route path='/info' element={<UserInfo/>}></Route>
+        <Route path='/admin' element={<Admin/>}></Route>
 
         {/* 게시판 */}
         <Route path='/board' element={<BoardList/>}></Route>
@@ -85,7 +90,7 @@ function App() {
         <Route path='/board/write/:bid' element={<BoardEdit setIsLogin={setIsLogin}/>}></Route>
 
         {/* 채팅 */}
-        <Route path='/chat' element={<Chat/>}></Route>
+        <Route path='/chat' element={<Chat isLogin={isLogin}/>}></Route>
         
 
       </Routes>

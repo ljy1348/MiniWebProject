@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-function Header({isLogin, setIsLogin}:{isLogin:boolean, setIsLogin:React.Dispatch<React.SetStateAction<boolean>>}) {
+function Header({isLogin, setIsLogin, setIsAdmin, isAdmin}:{isLogin:boolean, isAdmin:boolean, setIsLogin:React.Dispatch<React.SetStateAction<boolean>>, setIsAdmin:React.Dispatch<React.SetStateAction<boolean>>}) {
 
   const onClickLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('exp');
     localStorage.removeItem('name');
     setIsLogin(false);
+    setIsAdmin(false);
   };
 
   return (
@@ -42,6 +43,19 @@ function Header({isLogin, setIsLogin}:{isLogin:boolean, setIsLogin:React.Dispatc
                 </Link>
               </li>
               <li className="nav-item"></li>
+              { isLogin &&
+              <li className="nav-item">
+                <Link className="navbar-brand" to={'/info'}>
+                  회원 정보
+                </Link>
+              </li>}
+              {isAdmin &&
+              <li className="nav-item">
+                <Link className="navbar-brand" to={'/admin'}>
+                  관리자
+                </Link>
+              </li>
+              }
             </ul>
             {/* <button className="m-1" onClick={onClickTest}> 테스트 </button> */}
             {!isLogin && (

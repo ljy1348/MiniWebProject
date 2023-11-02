@@ -4,7 +4,7 @@ import { useNavigate  } from 'react-router-dom';
 import IUser from './../../types/auth/IUser';
 import UserService from "../../services/auth/UserService";
 
-function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<boolean>>}) {
+function Login({setIsLogin, setIsAdmin}:{setIsLogin:React.Dispatch<React.SetStateAction<boolean>>, setIsAdmin:React.Dispatch<React.SetStateAction<boolean>>}) {
   // 유저 객체
     const [user, setUser] = useState<IUser>({userName:"",password:""});
     // 네비
@@ -28,6 +28,10 @@ function Login({setIsLogin}:{setIsLogin:React.Dispatch<React.SetStateAction<bool
                 localStorage.setItem("token",token);
                 console.log(response);
                 setIsLogin(true);
+                // console.log(UserService.getUserRole());
+                if (UserService.getUserRole() === "ADMIN") {
+                  setIsAdmin(true);
+                }
                 navi(-1);
             })
         .catch(error => {
