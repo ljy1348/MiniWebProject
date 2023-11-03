@@ -144,9 +144,9 @@ public class BoardController {
     @Autowired
     NotificationController notificationController;
 
-        @GetMapping("/test")
-    public ResponseEntity<?> test() {
-        notificationController.sendNotification("a","aaaaa");
+        @GetMapping("/test/{username}")
+    public ResponseEntity<?> test(@PathVariable String username) {
+        notificationController.sendNotification(username,username+" : 에게 알림이 왔습니다.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

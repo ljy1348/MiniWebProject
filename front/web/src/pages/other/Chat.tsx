@@ -51,13 +51,9 @@ function Chat({isLogin}:{isLogin:boolean}) {
       stompClient.subscribe('/topic/messages', (message) => {
         const string = new TextDecoder('utf-8').decode(message.binaryBody);
         object = JSON.parse(string);
-        const message2 = object.message;
-        if (chat.length > 50) chat.shift();
-        console.log(chat); 
         setChat((prevChat) => { 
-          if (prevChat.length > 10) prevChat.shift();
+          if (prevChat.length > 11) prevChat.shift();
           return [...prevChat, object]});
-        // setChat([...chat, object]);
         console.log(object.chatName+' : '+string);
       });
     };
@@ -100,15 +96,13 @@ function Chat({isLogin}:{isLogin:boolean}) {
     <div className='container'>
         <div className='chat container mt-5' >
           {chat.map((val, idx)=>{
-            if (val.chatName == localStorage.getItem('chatName')) {
-              console.log("chatname이 같음")
+            if (val.chatName == localStorage.getItem('chatName') || val.chatName == localStorage.getItem('lastUsername')) {
               return  (
                 <div className='text-end' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{val.chatName} : {val.message}</p></div>
                 )
             }
                 if (localStorage.getItem('token') != null) {
                   if (val.chatName == UserService.getUserName()) {
-
                     return (
                       <div className='text-end' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{val.chatName} : {val.message}</p></div>
                       )

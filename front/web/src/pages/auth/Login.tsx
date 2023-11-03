@@ -19,14 +19,14 @@ function Login({setIsLogin, setIsAdmin}:{setIsLogin:React.Dispatch<React.SetStat
     const onSubmitLogin = (event: React.FormEvent<HTMLFormElement>) => {
       // 새로고침안함
         event.preventDefault();
-        console.log("눌름");
+        // console.log("눌름");
         // 로그인 정보 보내기 성공하면 리턴받은 토큰 저장 후 isLogin true로 변경 후 뒤로가기
         UserService.login(user)
         .then((response) => {
                 const token = response.headers['authorization'];
                 localStorage.removeItem('token');
                 localStorage.setItem("token",token);
-                console.log(response);
+                // console.log(response);
                 setIsLogin(true);
                 // console.log(UserService.getUserRole());
                 if (UserService.getUserRole() === "ADMIN") {
@@ -35,7 +35,7 @@ function Login({setIsLogin, setIsAdmin}:{setIsLogin:React.Dispatch<React.SetStat
                 navi(-1);
             })
         .catch(error => {
-          console.log("에러 발생")
+          // console.log("에러 발생")
           console.log(error)});
         
     }

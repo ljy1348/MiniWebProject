@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import { Route, Routes } from 'react-router-dom';
@@ -19,8 +19,7 @@ function App() {
   const [isNotification, setIsNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  // const [eventSource, setEventSource] = useState<EventSource>();
-  let eventSource:EventSource;
+  const eventSource = useRef<EventSource | null>(null);
 
   // 토큰 만료 확인
   useEffect(()=>{
@@ -29,53 +28,41 @@ function App() {
     } else {
       setIsLogin(false);
     } 
-  },[]);
+  },[isLogin]);
 
   // 로그인 하면 sse연결하기
   useEffect(()=>{
     // let eventSource:EventSource;
     if (isLogin) {
       const username = UserService.getUserName();
-    // eventSource = new EventSource(`http://172.30.1.254:8080/api/notification?username=${username}`);
-    // eventSource = new EventSource(`http://127.0.0.1:8080/api/notification?username=${username}`);
-    eventSource = new EventSource(`http://59.28.90.58:8080/api/notification?username=${username}`, { withCredentials: true });
-    // const eventSource = new EventSource(`https://ccd9-59-28-90-58.ngrok-free.app/api/notification?username=${username}`);
+      eventSource.current = new EventSource(`http://59.28.90.58:8080/api/notification?username=${username}`, { withCredentials: true });
 
-      eventSource.addEventListener("sse", (data)=>{
-        console.log(data);
-      })
-
-      eventSource.onopen = (e) =>{console.log("오픈?");
-    console.log(e);}
-
-    eventSource.onmessage = (event) => {
-      console.log("메세지왔음");
+    eventSource.current.onmessage = (event) => {
       setNotificationMessage(event.data);
       setIsNotification(true);
       setTimeout(() => {
         setIsNotification(false);
       }, 2000);
     };
-    console.log(eventSource.readyState);
 
-    eventSource.onerror = (e:any) => {
+    eventSource.current.onerror = (e:any) => {
       console.log(e);
     }
 
+  } else {
+    if (eventSource.current)
+    eventSource.current.close();
   }
   },[isLogin])
-
-  const ready = () => {
-    console.log(eventSource.readyState);
-  }
 
   return (
     <div className="App">
       <Header isLogin={isLogin} setIsLogin={setIsLogin} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>
+      {/* <button onClick={}>버튼</button> */}
 
       <Routes>
         {/* 홈 */}
-        <Route path='/' element={<Home ready={ready}/>}></Route>
+        <Route path='/' element={<Home setIsLogin={setIsLogin} setIsAdmin={setIsAdmin}/>}></Route>
 
         {/* 회원가입/로그인 */}
         <Route path='/register' element={<Register/>}></Route>

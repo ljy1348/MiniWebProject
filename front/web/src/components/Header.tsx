@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
+import UserService from '../services/auth/UserService';
 
-function Header({isLogin, setIsLogin, setIsAdmin, isAdmin}:{isLogin:boolean, isAdmin:boolean, setIsLogin:React.Dispatch<React.SetStateAction<boolean>>, setIsAdmin:React.Dispatch<React.SetStateAction<boolean>>}) {
+function Header({isLogin, setIsLogin, setIsAdmin, isAdmin}:
+  {isLogin:boolean, isAdmin:boolean, setIsLogin:React.Dispatch<React.SetStateAction<boolean>>, setIsAdmin:React.Dispatch<React.SetStateAction<boolean>>}) {
 
   const onClickLogout = () => {
-    localStorage.removeItem('token');
+    const lastUser = UserService.getUserName();
+    localStorage.setItem('lastUsername', lastUser);
     localStorage.removeItem('exp');
+    localStorage.removeItem('token');
     localStorage.removeItem('name');
     setIsLogin(false);
     setIsAdmin(false);
