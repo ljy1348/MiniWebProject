@@ -50,26 +50,41 @@ function BoardRead() {
     .catch((error)=>{console.log(error)})
   }
 
+  const boardWriter = () => {
+    if (board.writer == UserService.getUserName()) {
+      return <><button className='btn btn-sm' onClick={onClickEdit}>수정</button><button className='btn btn-sm' onClick={onClickDelete}>삭제</button></>
+    }
+    if (UserService.getUserRole() == "ADMIN") {
+      return <><button className='btn btn-sm' onClick={onClickDelete}>삭제</button></>
+    }
+    return <></>
+  }
+
+
 
   return (
 
 
     <div className='container'>
+      {/* 타이틀 */}
       <h1 className="display-1">게시판</h1>
 
+{/* 게시판 조회 테이블 */}
       <table className="table">
   <thead>
     <tr>
+      {/* 게시판 제목 */}
       <td className='title' >{board.title}
-      <span style={{width:'110px', float:"right"}}>{ board.writer ==  name &&
-<><button className='btn btn-sm' onClick={onClickEdit}>수정</button><button className='btn btn-sm' onClick={onClickDelete}>삭제</button></>
-}</span></td>
+      {/* 내가 쓴 글이면 수정/삭제 표시 */}
+      <span style={{width:'110px', float:"right"}}>{boardWriter()}</span></td>
     </tr>
   </thead>
   <tbody>
+    {/* 본문 - 에디터를 사용했기 때문에 html태그가 들어가 있어, dangerouslySetInnerHTML 사용 */}
     <tr className='contentTr'>
       <th className='text-start boardContent' colSpan={2}><span dangerouslySetInnerHTML={{__html: board.content}} className='boardContent'></span></th>
     </tr>
+    {/* 첨부파일이 있다면, 첨부파일 표시 */}
     {
       fileList && fileList.map((data, idx)=>{
       return (  <tr key={idx}>
@@ -77,9 +92,10 @@ function BoardRead() {
     </tr>)
       })
     }
-
+{/* 댓글 표시 */}
       <BoardComment bid={Number(bid)} boardWriter={board.writer}></BoardComment>
       <tr><td colSpan={2}>
+        {/* 뒤로가기 */}
 <button onClick={()=>{navi(-1)}}>돌아가기</button>
         </td></tr>
   </tbody>

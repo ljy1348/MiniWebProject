@@ -7,11 +7,23 @@ import BoardService from "../../services/BoardService";
 import IBoardComment from "../../types/board/IBoardComment";
 
 function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
+
+  // 대댓글 저장용 함수
   const initReCommnet = { bid:0, commentContent: "", isReComment:false, parentBcid:0, parentWriter:"" };
+
+  // 댓글 목록 초기화용 함수
   const initComment = [{ bcid: 0, commentWriter: "", commentContent: "", isReComment:false, parentBcid:0 }];
+
+  // 댓글 정보 저장 함수
   const [comment, setComment] = useState<Array<IBoardComment>>(initComment);
+
+  // 내가 쓴 글/댓글 인지 확인하기 위한 함수
   const [username, setUsername] = useState("");
+
+  // 댓글 클릭 했을 때 수정창을 띄우기 위해 댓글 인덱스를 저장하는 함수
   const [bcidx, setbcidx] = useState(-1);
+
+  // 댓글 수정용 객체
   const [commentEdit, setCommentEdit] = useState<IBoardComment>({
     commentContent: "",
     commentWriter:"",
@@ -21,6 +33,8 @@ function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
     parentBcid:0,
     parentWriter:""
   });
+
+  // 댓글 작성용 객체
   const [addComment, setAddComment] = useState({bid:bid,commentContent:"",isReComment:false})
   const [reder, setRender] = useState(0);
   const [rebcidx, setRebcidx] = useState(-1);
@@ -105,9 +119,27 @@ function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
     .catch(error=>{console.log(error)});
   };
 
+  const commentWriter = (idx:number, bcid:number) => {
+    if ( comment[idx].commentWriter == UserService.getUserName()) {
+      return <><button value={idx} onClick={onClickEdit}>
+      수정
+    </button>
+    <button value={bcid} onClick={onClickDelete}>
+      삭제
+    </button></>
+    }
+    if (UserService.getUserRole() == "ADMIN") {
+      return <><button value={bcid} onClick={onClickDelete}>
+      삭제
+    </button></>
+    }
+    return <></>
+  }
+
   return (
     <>
     <tr>
+      {/* 댓글 목록 시작 */}
     <th className="text-start" colSpan={2}>
       {comment.map((val, idx) => {
         return (
@@ -121,14 +153,17 @@ function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
           >
             <tbody>
               <tr>
+              {/* 댓글 작성자 */}
               {val.isReComment && <td style={{width:"20px"}}>┖</td>}
                 <td style={{ width: "100px", wordWrap: "break-word" }}>
-                  {/* {val.isReComment > 0 && <>┖</>} */}
                   {val.commentWriter}
                 </td>
                 {bcidx != idx ? (
+                  // 댓글 표시용
                   <>
+                  {/* 댓글 작성자, 내용 표시 시작*/}
                     <td style={{ width: "80%" }}>
+                      {/* 댓글 누르면 해당 댓글에 대댓글 다는 창 추가 */}
                       <div
                       onClick={()=>onClickComment(val.bcid, val.parentBcid, val.commentWriter)}
                         style={{
@@ -140,8 +175,10 @@ function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
                         : <span>{val.commentContent}</span>
                       </div>
                     </td>
+                    {/* 댓글 작성자, 내용 표시 끝 */}
+                    {/* 글쓴이 == 유저 라면 수정/삭제 버튼 표시 시작 */}
                     <td style={{ width: "100px" }}>
-                      {username === val.commentWriter && (
+                      {/* {username === val.commentWriter && (
                         <>
                           <button value={idx} onClick={onClickEdit}>
                             수정
@@ -150,10 +187,15 @@ function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
                             삭제
                           </button>
                         </>
-                      )}
+                      )} */}
+                      {
+                        commentWriter(idx,val.bcid)
+                      }
                     </td>
+                      {/* 글쓴이 == 유저 라면 수정/삭제 버튼 표시 끝 */}
                   </>
                 ) : (
+                  // 댓글 수정 시작
                   <>
                     <td>
                       <textarea
@@ -166,8 +208,10 @@ function BoardComment({ bid, boardWriter }:{bid:number, boardWriter:string}) {
                       <button onClick={onClickSave}>완료</button>
                     </td>
                   </>
+                  // 댓글 수정 완료
                 )}
               </tr>
+              {/* 대댓글 등록창 */}
               {rebcidx === val.bcid&&<tr><td colSpan={5} className='text-align'><textarea className="me-3" 
               onChange={onChangeReComment} value={reComment.commentContent}>
                 </textarea><button onClick={onSubmitReComment}>등록</button></td></tr>}

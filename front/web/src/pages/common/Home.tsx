@@ -59,7 +59,7 @@ function Home({setIsLogin, setIsAdmin}:{setIsLogin:any, setIsAdmin:any}) {
       테스트용 로그인 버튼<br/><br/>
       <button onClick={onClickUser}>일반 회원</button><br/> 기능 : 게시글 및 댓글 등록/수정/삭제, 회원정보 페이지<br/><br/>
       <button onClick={onClickAdmin}>관리자</button><br/> 기능 : 일반 회원 기능 + 타인 작성 글 삭제<br/><br/>
-      <button onClick={onClickSuperAdmin}>최상위 관리자</button><br/> 기능 : 관리자 기능 + 계정 권한 변경<br/><br/>
+      {/* <button onClick={onClickSuperAdmin}>최상위 관리자</button><br/> 기능 : 관리자 기능 + 계정 권한 변경<br/><br/> */}
       
 
 

@@ -2,14 +2,17 @@ package com.example.web.service;
 
 import com.example.web.model.entity.Board;
 import com.example.web.model.entity.BoardComment;
+import com.example.web.model.entity.User;
 import com.example.web.repository.BoardCommentRepository;
 import com.example.web.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +48,14 @@ public class BoardCommentService {
     public boolean removeComment(long bcid) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<BoardComment> optional = boardCommentRepository.findById(bcid);
+
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+
+        boolean isAdmin = authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
         if (optional.isPresent()) {
-            if (auth.getName().equals(optional.get().getCommentWriter())) {
+            if (auth.getName().equals(optional.get().getCommentWriter()) || isAdmin) {
                 boardCommentRepository.deleteById(bcid);
                 boardRepository.deleteCommentCount(optional.get().getBid());
                 return true;

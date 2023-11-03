@@ -25,18 +25,18 @@ function App() {
   useEffect(()=>{
     if (UserService.isTokenExp()) {
       setIsLogin(true);
+      if (UserService.getUserRole() == "ADMIN") setIsAdmin(true);
     } else {
       setIsLogin(false);
     } 
   },[isLogin]);
 
-  // 로그인 하면 sse연결하기
   useEffect(()=>{
-    // let eventSource:EventSource;
+    // 로그인 하면 sse연결하기
     if (isLogin) {
       const username = UserService.getUserName();
       eventSource.current = new EventSource(`http://59.28.90.58:8080/api/notification?username=${username}`, { withCredentials: true });
-
+      // sse로 메세지 수신 될때 실행
     eventSource.current.onmessage = (event) => {
       setNotificationMessage(event.data);
       setIsNotification(true);
@@ -44,14 +44,21 @@ function App() {
         setIsNotification(false);
       }, 2000);
     };
-
+    // sse 연결에 에러 발생했을때
     eventSource.current.onerror = (e:any) => {
       console.log(e);
     }
 
   } else {
+    // 로그아웃시 sse 연결 클로즈
     if (eventSource.current)
     eventSource.current.close();
+  }
+  // 언마운트되면 연결 삭제
+  return () => {
+    if (eventSource.current) {
+      eventSource.current.close();
+    }
   }
   },[isLogin])
 

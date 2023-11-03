@@ -21,14 +21,13 @@ function Login({setIsLogin, setIsAdmin}:{setIsLogin:React.Dispatch<React.SetStat
         event.preventDefault();
         // console.log("눌름");
         // 로그인 정보 보내기 성공하면 리턴받은 토큰 저장 후 isLogin true로 변경 후 뒤로가기
+        // 토큰의 권한이 admin이면, isAdmin true
         UserService.login(user)
         .then((response) => {
                 const token = response.headers['authorization'];
                 localStorage.removeItem('token');
                 localStorage.setItem("token",token);
-                // console.log(response);
                 setIsLogin(true);
-                // console.log(UserService.getUserRole());
                 if (UserService.getUserRole() === "ADMIN") {
                   setIsAdmin(true);
                 }
