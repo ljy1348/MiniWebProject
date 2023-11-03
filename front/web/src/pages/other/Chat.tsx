@@ -24,8 +24,6 @@ function Chat({isLogin}:{isLogin:boolean}) {
       heartbeatOutgoing: 4000,
     }));
 
-
-    
     const onChangeInput = (e:any) =>{
       setInput(e.target.value);
     }
@@ -45,31 +43,18 @@ function Chat({isLogin}:{isLogin:boolean}) {
       return result;
     }
 
-
-    const wsConnect = () => {
-      // 웹소켓 구독 - 웹소켓에 데이터 올라오면 받아오기
-      stompClient.subscribe('/topic/messages', (message) => {
-        const string = new TextDecoder('utf-8').decode(message.binaryBody);
-        object = JSON.parse(string);
-        setChat((prevChat) => { 
-          if (prevChat.length > 11) prevChat.shift();
-          return [...prevChat, object]});
-        console.log(object.chatName+' : '+string);
-      });
-    };
-    
     // 웹소켓이 연결되면 실행
-    stompClient.onConnect = wsConnect;
-    stompClient.activate();
-
+    
     const [chatName, setChatName] = useState<any>("");
 
+    // 채팅목록 스크롤 맨밑고정
     function scrollToBottom() {
       const chatContainer = document.querySelector('.chat');
       if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
     }
     
     useEffect(()=>{scrollToBottom()},[chat])
+    
     
     useEffect(()=>{
       if (isLogin) setChatName(UserService.getUserName());
@@ -80,6 +65,34 @@ function Chat({isLogin}:{isLogin:boolean}) {
         } else {setChatName(localStorage.getItem('chatName'))}
       }
     },[isLogin])
+    
+    useEffect(() => {
+      let subscription:any;
+    
+      const wsConnect = () => {
+        // 웹소켓 구독
+        subscription = stompClient.subscribe('/topic/messages', (message) => {
+          // 메시지 수신 로직...
+          const string = new TextDecoder('utf-8').decode(message.binaryBody);
+          object = JSON.parse(string);
+          setChat((prevChat) => { 
+            if (prevChat.length > 11) prevChat.shift();
+            return [...prevChat, object]});
+          console.log(object.chatName+' : '+string);
+        });
+      };
+    
+      if (!stompClient.active) {
+        stompClient.onConnect = wsConnect;
+        stompClient.activate();
+      }
+    
+      // 구독 해제 로직을 클린업 함수로 반환
+      return () => {
+        subscription && subscription.unsubscribe();
+        stompClient.deactivate();
+      };
+    }, [stompClient]);
 
     const onClickEvent = () => {
 
