@@ -7,6 +7,10 @@ const getAll = (page:number, size:number) => {
     return Http.get(`/board?page=${page}&size=${size}`);
 };
 
+const findBoardList = (title:string, writer:string, content:string, page:number, size:number) => {
+    return Http.get(`/board?title=${title}&writer=${writer}&content=${content}&page=${page}&size=${size}`);
+}
+
 const write = (data:FormData) => {
     return Http.post("/board/user",data,{headers: {
         'Content-Type': 'multipart/form-data',
@@ -32,6 +36,10 @@ const boardCommendGet = (bid:number) => {
     return Http.get("/board/comment/"+bid);
 };
 
+const boardCommendFind = (commentWriter:string, commentContent:string) => {
+    return Http.get(`/board/comment?commentWriter=${commentWriter}&commentContent=${commentContent}`);
+};
+
 const boardCommentAdd = (boardComment:IBoardComment, boardWriter:string) => {
     return Http.post("/board/user/comment?boardWriter="+boardWriter, boardComment, {headers: {
         'Authorization': localStorage.getItem('token')}});
@@ -47,6 +55,15 @@ const boardCommentDelete = (bcid:number) => {
         'Authorization': localStorage.getItem('token')}});
 };
 
+const getBoardByUser = (writer:string) => {
+    return Http.get(`/board/recent?writer=${writer}&page=0&size=5`);
+};
+
+const restoreBoard = (bid:number) => {
+    return Http.put("/board/admin/recent/"+bid, "",{headers: {
+        'Authorization': localStorage.getItem('token')}});
+};
+
 const temp = () => {};
 
 
@@ -59,7 +76,10 @@ const BoardService = {
     boardCommendGet,
     boardCommentAdd,
     boardCommentEdit,
-    boardCommentDelete
+    boardCommentDelete,
+    getBoardByUser,
+    restoreBoard,
+    findBoardList
 }
 
 export default BoardService;

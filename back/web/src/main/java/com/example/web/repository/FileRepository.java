@@ -12,4 +12,5 @@ public interface FileRepository extends JpaRepository<File, Long> {
     List<FileIdDto>  findAllByBidAndIsImage(long bid, boolean isImage);
 
     List<File> findByFidIn(List<Long> fid);
+
 }

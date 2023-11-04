@@ -11,8 +11,8 @@ import BoardWrite from './pages/board/BoardWrite';
 import BoardRead from './pages/board/BoardRead';
 import BoardEdit from './pages/board/BoardEdit';
 import Chat from './pages/other/Chat';
-import UserInfo from './pages/auth/UserInfo';
-import Admin from './pages/auth/Admin';
+import UserInfo from './pages/auth/User/UserInfo';
+import Admin from './pages/auth/Admin/Admin';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);

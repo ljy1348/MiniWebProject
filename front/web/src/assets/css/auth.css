@@ -1,0 +1,25 @@
+.recentBoard {
+    float: left;
+    width: 45%;
+    /* max-width: 700px; */
+}
+
+@media (max-width: 599px) {
+    .recentBoard {
+        width: 80%;
+    }
+  }
+
+.recentComment {
+    float: left;
+    width: 45%;
+}
+
+.recent-list {
+    text-align: start;
+}
+
+.Link{
+    color:black;
+    text-decoration-line: none;
+  }

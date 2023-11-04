@@ -37,4 +37,18 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Modifying
     @Query(value = "UPDATE board SET comment_count = comment_count - 1 WHERE bid = :bid", nativeQuery = true)
     void deleteCommentCount(@Param("bid") long bid);
+
+    @Query(value = "SELECT BID," +
+            "TITLE, WRITER, INSERT_TIME as insertTime, VIEWS, COMMENT_COUNT as commentCount," +
+            "VOTE, IS_PIN as isPin,IS_FILE as isFile,IMG_FID as imgFid FROM BOARD WHERE DELETE_YN = 'Y' ORDER BY DELETE_TIME DESC",
+            countQuery = "SELECT count(*) FROM BOARD WHERE DELETE_YN = 'Y'",
+            nativeQuery = true)
+    Page<BoardListDto> findAllByDeleteYN(Pageable pageable);
+
+    Page<BoardListDto> findAllByWriterOrderByInsertTimeDesc(String writer, Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE board SET delete_yn = 'N' WHERE bid = :bid", nativeQuery = true)
+    void restoreBoardByBid(@Param("bid") long bid);
 }

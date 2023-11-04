@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../css/Chat.css';
+import '../../assets/css/Chat.css';
 import SockJs from "sockjs-client";
 import * as StompJs from "@stomp/stompjs";
 import UserService from '../../services/auth/UserService';
@@ -14,10 +14,10 @@ function Chat({isLogin}:{isLogin:boolean}) {
       // SockJS 경로를 brokerURL에 지정
       brokerURL: 'ws://59.28.90.58:8080/chat/websocket',
       connectHeaders: {
-        login: 'ecab7bc0-2a34-0ad6-dada-0a7a074c30fb-53',
+        // login: 'ecab7bc0-2a34-0ad6-dada-0a7a074c30fb-53',
       },
       debug: function (str) {
-        // console.log(str);
+        console.log(str);
       },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,

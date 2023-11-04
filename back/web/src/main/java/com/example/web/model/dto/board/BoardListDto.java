@@ -1,5 +1,7 @@
 package com.example.web.model.dto.board;
 
+import java.time.LocalDateTime;
+
 /**
  * packageName : com.example.web.model.dto.board
  * fileName : BoardListDto
@@ -14,7 +16,7 @@ package com.example.web.model.dto.board;
  * 2023-10-27         GGG          최초 생성
  */
 public interface BoardListDto {
-    Integer getBid();
+    Long getBid();
     String getTitle();
     String getWriter();
     String getInsertTime();
@@ -23,6 +25,6 @@ public interface BoardListDto {
     Integer getVote();
     Boolean getIsPin();
     Boolean getIsFile();
-    String getContent();
+//    String getContent();
     Long getImgFid();
 }

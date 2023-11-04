@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import IBoardList from '../../types/board/IBoardList';
 import axios from 'axios';
 import BoardService from '../../services/BoardService';
-import '../../css/board/BoardList.css';
+import '../../assets/css/board/BoardList.css';
 
 function BoardList() {
     const initBoardList:IBoardList[] = [{bid: 0,

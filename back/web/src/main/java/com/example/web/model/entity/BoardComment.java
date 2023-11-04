@@ -35,6 +35,7 @@ public class BoardComment extends BaseTimeEntity {
     private String parentWriter;
     @Column(columnDefinition = "boolean default false")
     private Boolean isReComment;
+    private String backupContent;
 
     @PostPersist
     public void setAnotherColumn() {

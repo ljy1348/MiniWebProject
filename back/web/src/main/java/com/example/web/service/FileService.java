@@ -67,6 +67,8 @@ public class FileService {
             for (int j = 0; j < list1.size(); j++) {
                 list1.get(j).setBid(board.getBid());
             }
+
+//            fileRepository.saveAll(list1);
 //            첫번째 이미지의 fid 반환
             return Long.parseLong(fid);
         }

@@ -3,8 +3,10 @@ package com.example.web.controller;
 import com.example.web.model.dto.FileIdDto;
 import com.example.web.model.dto.board.BoardListDto;
 import com.example.web.model.entity.Board;
+import com.example.web.model.entity.BoardComment;
 import com.example.web.model.entity.File;
 import com.example.web.repository.BoardRepository;
+import com.example.web.service.BoardCommentService;
 import com.example.web.service.BoardService;
 import com.example.web.service.FileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +47,8 @@ public class BoardController {
     BoardService boardService;
     @Autowired
     FileService fileService;
+    @Autowired
+    BoardCommentService boardCommentService;
 
     @GetMapping("")
     public ResponseEntity<?> findAll(Pageable pageable) {
@@ -139,6 +143,51 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/admin/deletion_board")
+    public ResponseEntity<?> findAllByDelete(Pageable pageable) {
+        try {
+            Page<BoardListDto> page = boardService.findAllByDelete(pageable);
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("boardList", page.getContent());
+            map.put("totalPages", page.getTotalPages());
+            log.info(map.get("boardList").toString());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<Object> findAllByWriter(@RequestParam String writer, Pageable pageable) {
+        try {
+
+        Page<BoardListDto> boardListDtos = boardService.findAllByWriter(writer, pageable);
+        Page<BoardComment> boardComments = boardCommentService.findByCommentWriter(writer, pageable);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("boardList", boardListDtos.getContent());
+        map.put("comment", boardComments.getContent());
+        return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @PutMapping("/admin/recent/{bid}")
+    public ResponseEntity<Object> recentBoard(@PathVariable long bid) {
+        try {
+            boolean isResult = boardService.restoreBoardByBid(bid);
+            if (isResult) return new ResponseEntity<>(HttpStatus.OK);
+            else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 //    테스트 코드 나중에 삭제
     @Autowired

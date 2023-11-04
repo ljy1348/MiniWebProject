@@ -2,7 +2,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import '../../css/board/BoardWrite.css';
+import '../../assets/css/board/BoardWrite.css';
 import UserService from '../../services/auth/UserService';
 import BoardService from '../../services/BoardService';
 import FileService from '../../services/FileService';

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../../css/board/BoardComment.css";
+import "../../assets/css/board/BoardComment.css";
 import UserService from "../../services/auth/UserService";
 import BoardService from "../../services/BoardService";
 import IBoardComment from "../../types/board/IBoardComment";

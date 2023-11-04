@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import '../../css/board/BoardRead.css';
+import '../../assets/css/board/BoardRead.css';
 import { useParams, useNavigate, renderMatches, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Route, Routes  } from 'react-router-dom';
