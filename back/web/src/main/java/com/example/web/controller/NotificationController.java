@@ -16,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin(origins = "*", allowedHeaders = "*", exposedHeaders = "*")
 @CrossOrigin(origins = "http://59.28.90.58:3000/", allowCredentials = "true")
 
 public class NotificationController {

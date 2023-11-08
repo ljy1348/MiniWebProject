@@ -78,7 +78,7 @@ function App() {
         <Route path='/admin' element={<Admin/>}></Route>
 
         {/* 게시판 */}
-        <Route path='/board' element={<BoardList/>}></Route>
+        <Route path='/board' element={<BoardList isLogin={isLogin}/>}></Route>
         <Route path='/board/:bid' element={<BoardRead/>}></Route>
         <Route path='/board/write' element={<BoardWrite setIsLogin={setIsLogin}/>}></Route>
         <Route path='/board/write/:bid' element={<BoardEdit setIsLogin={setIsLogin}/>}></Route>

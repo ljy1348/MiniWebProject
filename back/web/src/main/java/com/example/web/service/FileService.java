@@ -35,8 +35,7 @@ public class FileService {
 
 //    게시글 작성시 본문에 이미지가 포함되어 있는지 확인
 //    이미지가 있다면, 이미지의 bid 설정
-//    bid가 설정되어 있지 않다면(bid == 0) 이미지를 삽입했다가 지운 경우이므로
-//    나중에 삭제함
+
     public Long uploadImg(Board board) {
 //        본문 이미지의 fid를 저장할 list
         List<Long> list = new ArrayList<>();

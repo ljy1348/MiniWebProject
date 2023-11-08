@@ -6,7 +6,7 @@ import axios from 'axios';
 import BoardService from '../../services/BoardService';
 import '../../assets/css/board/BoardList.css';
 
-function BoardList() {
+function BoardList({isLogin}:{isLogin:boolean}) {
     const initBoardList:IBoardList[] = [{bid: 0,
         title: "",
         writer: "",
@@ -45,6 +45,18 @@ function BoardList() {
     <div className='container'>
         <h1>게시판</h1>
 
+{/* 검색 시작 */}
+        <div>
+          <select name='searchName'>
+            <option value={'title'}>제목</option>
+            <option value={'writer'}>작성자</option>
+            <option value={'content'}>내용</option>
+          </select>
+          &nbsp;
+          <input type='text' className='search'></input>
+            <button>검색</button>
+          </div>
+
         <table className="table table-hover">
   <thead>
     <tr>
@@ -77,7 +89,7 @@ function BoardList() {
   </tbody>
   
 </table>
-    <Link to={"/board/write"}><button className="btn btn-outline-secondary">글쓰기</button></Link>
+    {isLogin && <Link to={"/board/write"}><button className="btn btn-outline-secondary">글쓰기</button></Link>}
     <div className='m-3'><Stack alignItems="center"><Pagination count={maxPage} color="primary" page={page} 
     siblingCount={1} boundaryCount={1}
     showFirstButton showLastButton onChange={onChangePage}/></Stack></div>

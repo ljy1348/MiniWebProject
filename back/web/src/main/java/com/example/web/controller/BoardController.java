@@ -72,8 +72,6 @@ public class BoardController {
         try {
 //            board객체 가져오기
             Board board1 = objectMapper.readValue(board, Board.class);
-//            게시물 내용에 img파일이 있으면 첫번째 이미지의 fid를 board1의 imgfid에 세팅
-//            board1 = fileService.uploadImg(board1);
 //            board객체 db에 저장하기
             Board boardSave = boardService.save(board1);
 //            저장된 객체의 bid 가져오기

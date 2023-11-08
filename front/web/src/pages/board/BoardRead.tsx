@@ -19,6 +19,7 @@ function BoardRead() {
   const [fileList, setFileList] = useState<Array<IFileList>>([]);
   const [render, setRender] = useState(0);
   const [name, setName] = useState("");
+  const [date, setDate] = useState();
 
   useEffect(()=>{
     BoardService.get(Number(bid))
@@ -74,9 +75,12 @@ function BoardRead() {
   <thead>
     <tr>
       {/* 게시판 제목 */}
-      <td className='title' >{board.title}
+      <td className='title' ><h3>{board.title}</h3>
       {/* 내가 쓴 글이면 수정/삭제 표시 */}
       <span style={{width:'110px', float:"right"}}>{boardWriter()}</span></td>
+    </tr>
+    <tr className='boardWriter'>
+      <td className='boardWriter'>&nbsp;&nbsp;작성자 : {board.writer} <span className='time'>{board.insertTime}</span> {date}</td>
     </tr>
   </thead>
   <tbody>

@@ -19,3 +19,37 @@ img {
 .contentTr {
     max-width: 100px;
 }
+
+.table .title {
+    text-align: start;
+}
+
+.boardWriter {
+    font-size: 14px;
+    text-align: start;
+}
+
+.boardWriter {
+    background-color: rgba(135, 207, 235, 0.479);
+    border-top: solid 1px black;
+}
+
+.time {
+    color: #b3aeae;
+}
+
+.recomment {
+    margin-left: 5%;
+    max-width: 95%;
+}
+
+.comment {
+}
+
+.recomment-writer {
+    background-color: antiquewhite;
+}
+
+.comment-writer {
+    background-color: hsla(0, 6%, 83%, 0.562);
+}
