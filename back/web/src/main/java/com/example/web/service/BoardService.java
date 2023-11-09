@@ -51,6 +51,13 @@ public class BoardService {
         return boardRepository.findAllByOrderByInsertTimeDesc(pageable);
     }
 
+    public Page<BoardListDto> findSearch(String searchTitle, String searchName, Pageable pageable) {
+        if (searchTitle.equals("title")) return boardRepository.findAllByTitleContainingOrderByInsertTimeDesc(searchName,pageable);
+        else if (searchTitle.equals("writer")) return boardRepository.findAllByWriterContainingOrderByInsertTimeDesc(searchName,pageable);
+        else if (searchTitle.equals("content")) return boardRepository.findAllByContentContainingOrderByInsertTimeDesc(searchName,pageable);
+        else return boardRepository.findAllByOrderByInsertTimeDesc(pageable);
+    }
+
     public Board save(Board board) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         board.setWriter(auth.getName());

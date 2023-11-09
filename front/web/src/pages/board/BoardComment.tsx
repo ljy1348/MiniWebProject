@@ -144,7 +144,7 @@ function BoardComment({
 
   // 대댓글 서브밋 함수
   const onSubmitReComment = () => {
-    BoardService.boardCommentAdd(reComment, "")
+    BoardService.boardCommentAdd(reComment, boardWriter)
       .then((response) => {
         setRender(reder + 1);
         setRebcidx(-1);

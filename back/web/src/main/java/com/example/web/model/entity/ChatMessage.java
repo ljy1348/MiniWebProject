@@ -1,21 +1,18 @@
 package com.example.web.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
-public class ChatMessage {
-    private String content;
-    private String sender;
-    private MessageType type;
-    private Date timestamp;
-
-    // getters and setters
-
-    public enum MessageType {
-        CHAT, JOIN, LEAVE
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+public class ChatMessage implements Serializable {
+    private String message;
+    private String chatName;
 }

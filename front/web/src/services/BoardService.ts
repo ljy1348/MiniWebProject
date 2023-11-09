@@ -7,6 +7,10 @@ const getAll = (page:number, size:number) => {
     return Http.get(`/board?page=${page}&size=${size}`);
 };
 
+const getList = (searchTitle:string,searchContent:string ,page:number, size:number) => {
+    return Http.get(`/board?searchTitle=${searchTitle}&searchContent=${searchContent}&page=${page}&size=${size}`);
+};
+
 const findBoardList = (title:string, writer:string, content:string, page:number, size:number) => {
     return Http.get(`/board?title=${title}&writer=${writer}&content=${content}&page=${page}&size=${size}`);
 }
@@ -79,7 +83,8 @@ const BoardService = {
     boardCommentDelete,
     getBoardByUser,
     restoreBoard,
-    findBoardList
+    findBoardList,
+    getList
 }
 
 export default BoardService;

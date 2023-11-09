@@ -36,6 +36,7 @@ public class BoardCommentController {
             try {
         BoardComment boardComment1 = boardCommentService.addComment(boardComment);
         notificationController.sendNotification(boardWriter,boardComment.getCommentContent());
+        if (boardComment.getIsReComment()) notificationController.sendNotification(boardComment.getParentWriter(),boardComment.getCommentContent());
         return new ResponseEntity<>(boardComment1, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

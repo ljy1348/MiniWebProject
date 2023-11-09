@@ -13,6 +13,7 @@ import BoardEdit from './pages/board/BoardEdit';
 import Chat from './pages/other/Chat';
 import UserInfo from './pages/auth/User/UserInfo';
 import Admin from './pages/auth/Admin/Admin';
+import EditUserInfo from './pages/auth/User/EditUserInfo';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -44,6 +45,7 @@ function App() {
         setIsNotification(false);
       }, 2000);
     };
+    
     // sse 연결에 에러 발생했을때
     eventSource.current.onerror = (e:any) => {
       console.log(e);
@@ -76,6 +78,7 @@ function App() {
         <Route path='/login' element={<Login setIsLogin={setIsLogin} setIsAdmin={setIsAdmin}/>}></Route>
         <Route path='/info' element={<UserInfo/>}></Route>
         <Route path='/admin' element={<Admin/>}></Route>
+        <Route path='/info/edit' element={<EditUserInfo/>}/>
 
         {/* 게시판 */}
         <Route path='/board' element={<BoardList isLogin={isLogin}/>}></Route>

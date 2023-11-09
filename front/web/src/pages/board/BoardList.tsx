@@ -23,9 +23,19 @@ function BoardList({isLogin}:{isLogin:boolean}) {
     const[maxPage, setMaxPage] = useState(1);
     const navi = useNavigate();
     const[pageSize, setPageSize] = useState(10);
+    const[searchTitle, setSearchTitle] = useState("title");
+    const[searchContent, setSearchContent] = useState("");
 
     useEffect(()=>{
-      BoardService.getAll(page-1,pageSize)
+      loadBoardList();
+    },[page]);
+
+    const onChangePage = (e:any, value:number) => {
+      setPage(value);
+    }
+
+    const loadBoardList = () => {
+      BoardService.getList(searchTitle, searchContent, page-1,pageSize)
       .then((response:any)=>{
         console.log(response);
         const {boardList, totalPages} = response.data
@@ -33,12 +43,22 @@ function BoardList({isLogin}:{isLogin:boolean}) {
         setMaxPage(totalPages);
       })
       .catch(error=>{console.log(error)})
-    },[page]);
-
-    const onChangePage = (e:any, value:number) => {
-      setPage(value);
     }
 
+    const searchButtonHandler = () => {
+      // console.log(searchTitle, searchContent);
+      // setSearchContent("");
+      loadBoardList();
+      setPage(1);
+    }
+
+    const onChangeSelect = (e:any) => {
+      setSearchTitle(e.target.value);
+    }
+
+    const onChangeInput = (e:any) => {
+      setSearchContent(e.target.value);
+    }
     
 
   return (
@@ -47,14 +67,14 @@ function BoardList({isLogin}:{isLogin:boolean}) {
 
 {/* 검색 시작 */}
         <div>
-          <select name='searchName'>
+          <select name='searchName' onChange={onChangeSelect} >
             <option value={'title'}>제목</option>
             <option value={'writer'}>작성자</option>
             <option value={'content'}>내용</option>
           </select>
           &nbsp;
-          <input type='text' className='search'></input>
-            <button>검색</button>
+          <input type='text' className='search' onChange={onChangeInput}></input>
+            <button onClick={searchButtonHandler}>검색</button>
           </div>
 
         <table className="table table-hover">

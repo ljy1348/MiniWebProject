@@ -28,6 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<BoardListDto> findAllByOrderByInsertTimeDesc(Pageable pageable);
 
+    Page<BoardListDto> findAllByWriterContainingOrderByInsertTimeDesc(String writer, Pageable pageable);
+    Page<BoardListDto> findAllByTitleContainingOrderByInsertTimeDesc(String title, Pageable pageable);
+    Page<BoardListDto> findAllByContentContainingOrderByInsertTimeDesc(String content, Pageable pageable);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE board SET comment_count = comment_count + 1 WHERE bid = :bid", nativeQuery = true)

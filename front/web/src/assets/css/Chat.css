@@ -1,7 +1,8 @@
 .chat{
     border: solid 1px;
-    height: 500px;
+    max-height: 450px;
     max-width: 700px;
+
     overflow: auto;
 }
 
@@ -25,5 +26,9 @@
     height:30px;
     margin:auto 0px;
     width: 50px;
+}
+
+.chatPage {
+    height: device-width;
 }
 

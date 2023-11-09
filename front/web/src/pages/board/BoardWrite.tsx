@@ -24,26 +24,6 @@ function BoardWrite({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActi
       }
     },[]);
 
-    // // 이미지 붙여넣기
-    // function MyCustomUploadAdapterPlugin(editor:any) {
-    //   editor.plugins.get("FileRepository").createUploadAdapter = (loader:any) => {
-    //     return {
-    //       upload: async () => {
-    //         const file = await loader.file;
-    //         const reader = new FileReader();
-    //         const fileType:string = file.type;
-    //         return new Promise((resolve, reject) => {
-    //           reader.addEventListener("load", () => {
-    //             resolve({ default: reader.result });
-    //           });
-    //           reader.addEventListener("error", reject);
-    //           reader.readAsDataURL(file);
-    //         });
-    //       },
-    //     };
-    //   };
-    // }
-
     // 이미지 업로드 함수
     function MyCustomUploadAdapterPlugin(editor: any) {
       editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {

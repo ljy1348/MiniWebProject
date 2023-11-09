@@ -50,10 +50,25 @@ public class BoardController {
     @Autowired
     BoardCommentService boardCommentService;
 
+//    @GetMapping("")
+//    public ResponseEntity<?> findAll(Pageable pageable) {
+//        try {
+//            Page<BoardListDto> page = boardService.findAllBy(pageable);
+//            Map<String, Object> map = new HashMap<>();
+//
+//            map.put("boardList", page.getContent());
+//            map.put("totalPages", page.getTotalPages());
+//            log.info(map.get("boardList").toString());
+//            return new ResponseEntity<>(map, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
     @GetMapping("")
-    public ResponseEntity<?> findAll(Pageable pageable) {
+    public ResponseEntity<?> findAll(@RequestParam String searchTitle, @RequestParam String searchContent, Pageable pageable) {
         try {
-            Page<BoardListDto> page = boardService.findAllBy(pageable);
+            Page<BoardListDto> page = boardService.findSearch(searchTitle, searchContent, pageable);
             Map<String, Object> map = new HashMap<>();
 
             map.put("boardList", page.getContent());

@@ -4,10 +4,11 @@ import SockJs from "sockjs-client";
 import * as StompJs from "@stomp/stompjs";
 import UserService from '../../services/auth/UserService';
 import IChat from '../../types/other/IChat';
+import axios from 'axios';
 
 
 function Chat({isLogin}:{isLogin:boolean}) {
-    const [chat, setChat] = useState<Array<IChat>>([]);
+    const [chat, setChat] = useState<Array<String>>([""]);
 
     const [input, setInput] = useState("");
     const [stompClient, setStompClient] = useState(new StompJs.Client({
@@ -52,6 +53,14 @@ function Chat({isLogin}:{isLogin:boolean}) {
       const chatContainer = document.querySelector('.chat');
       if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
     }
+
+    useEffect(()=>{
+      axios.get("http://59.28.90.58:8080/api/chat")
+      .then((response:any)=>{
+        console.log(response);
+      setChat(response.data)})
+      .catch((e:Error)=>{console.log(e)})
+    },[])
     
     useEffect(()=>{scrollToBottom()},[chat])
     
@@ -74,11 +83,8 @@ function Chat({isLogin}:{isLogin:boolean}) {
         subscription = stompClient.subscribe('/topic/messages', (message) => {
           // 메시지 수신 로직...
           const string = new TextDecoder('utf-8').decode(message.binaryBody);
-          object = JSON.parse(string);
           setChat((prevChat) => { 
-            if (prevChat.length > 11) prevChat.shift();
-            return [...prevChat, object]});
-          console.log(object.chatName+' : '+string);
+            return [...prevChat, string]});
         });
       };
     
@@ -86,6 +92,8 @@ function Chat({isLogin}:{isLogin:boolean}) {
         stompClient.onConnect = wsConnect;
         stompClient.activate();
       }
+
+
     
       // 구독 해제 로직을 클린업 함수로 반환
       return () => {
@@ -104,25 +112,36 @@ function Chat({isLogin}:{isLogin:boolean}) {
       setInput("");
     };
     
+  function isValidJson(text: string): boolean {
+  try {
+    JSON.parse(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
   return (
-    <div className='container'>
+    <div className='container chatPage'>
         <div className='chat container mt-5' >
-          {chat.map((val, idx)=>{
-            if (val.chatName == localStorage.getItem('chatName') || val.chatName == localStorage.getItem('lastUsername')) {
+          {chat&&chat.map((val, idx)=>{
+            if (typeof val === 'string' && isValidJson(val)) {
+              object = JSON.parse(val);
+            }
+            if (object.chatName == localStorage.getItem('chatName') || object.chatName == localStorage.getItem('lastUsername')) {
               return  (
-                <div className='text-end' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{val.chatName} : {val.message}</p></div>
+                <div className='text-end' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{object.chatName} : {object.message}</p></div>
                 )
             }
                 if (localStorage.getItem('token') != null) {
-                  if (val.chatName == UserService.getUserName()) {
+                  if (object.chatName == UserService.getUserName()) {
                     return (
-                      <div className='text-end' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{val.chatName} : {val.message}</p></div>
+                      <div className='text-end' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{object.chatName} : {object.message}</p></div>
                       )
                     }
                 }
             return (
-            <div className='text-start' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{val.chatName} : {val.message}</p></div>
+            <div className='text-start' style={{ whiteSpace: "pre-wrap"}} key={idx}><p >{object.chatName} : {object.message}</p></div>
             )
           })}
         </div>
