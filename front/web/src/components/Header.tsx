@@ -70,6 +70,11 @@ function Header({isLogin, setIsLogin, setIsAdmin, isAdmin}:
                 </Link>
               </li>
               }
+              <li className="nav-item">
+                <Link className="navbar-brand" to={'/pg'}>
+                  결제 테스트
+                </Link>
+              </li>
             </ul>
             {/* 로그인/로그아웃 버튼 */}
             {!isLogin && (

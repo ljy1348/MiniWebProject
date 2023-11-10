@@ -14,6 +14,8 @@ import Chat from './pages/other/Chat';
 import UserInfo from './pages/auth/User/UserInfo';
 import Admin from './pages/auth/Admin/Admin';
 import EditUserInfo from './pages/auth/User/EditUserInfo';
+import Payment from './pages/other/Payment';
+import PaySuccess from './pages/other/PaySuccess';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -88,6 +90,10 @@ function App() {
 
         {/* 채팅 */}
         <Route path='/chat' element={<Chat isLogin={isLogin}/>}></Route>
+
+        {/* 결제 */}
+        <Route path='/pg' element={<Payment/>}></Route>
+        <Route path='/success' element={<PaySuccess/>}></Route>
         
 
       </Routes>
