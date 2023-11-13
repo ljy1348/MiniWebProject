@@ -19,10 +19,9 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-  - name: Grant execute permission for gradlew
-  run: chmod +x back/web/gradlew
-
-
+    - name: Grant execute permission for gradlew
+      run: chmod +x back/web/gradlew
+    
     - name: Build Spring Boot Project
       run: |
         cd back/web
