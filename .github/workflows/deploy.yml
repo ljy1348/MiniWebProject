@@ -38,6 +38,8 @@ jobs:
         cd front/web
         npm install
         npm run build
+      env:
+        CI: false
 
     # AWS EC2 서버로 파일 전송
     - name: Copy files to EC2
