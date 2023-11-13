@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.PEM }}
         port: 22
-        source: "back/build/libs/*.jar, front/build"
+        source: "back/build/libs/*.war, front/build"
         target: "/path/to/remote/directory"
 
     # # 원격 서버에서 배포 스크립트 실행
