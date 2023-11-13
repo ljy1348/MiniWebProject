@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.PEM }}
         port: 22
-        source: "cd front/build"
+        source: "front/web/build"
         target: "/path/to/remote/directory"
         debug: true
 
