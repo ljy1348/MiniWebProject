@@ -51,6 +51,7 @@ jobs:
         port: 22
         source: "front/build"
         target: "/path/to/remote/directory"
+        debug: true
 
     # # 원격 서버에서 배포 스크립트 실행
     # - name: Execute deployment script
