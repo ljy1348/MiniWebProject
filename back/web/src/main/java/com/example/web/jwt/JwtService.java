@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,8 @@ import java.util.function.Function;
 @Component
 public class JwtService {
 
-    private String SECRET_KEY = "busgroifjoeifjoeifjeoaifjfoefwiefjoweifjoewifjijfoweifjeofij";
+    @Value("${jwt.secretKey}")
+    private String SECRET_KEY;
 
 
     public String createToken(User user) {

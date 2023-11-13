@@ -1,5 +1,6 @@
 package com.example.web.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -18,10 +19,17 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes("/app");
     }
 
+    @Value("${ec2.host}")
+    String host;
+
+    @Value("${front.port}")
+    String port;
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+
         registry.addEndpoint("/chat")
-                .setAllowedOrigins("http://59.28.90.58:3000")
+                .setAllowedOrigins("http://"+host+":"+port)
                 .withSockJS();
     }
 

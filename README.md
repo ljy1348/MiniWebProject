@@ -16,6 +16,7 @@
 [6. todo](#todo)  
 [7. 고민](#고민)  
 [8. 작업 히스토리](#작업-히스토리)  
+[9. 환경변수](#환경변수)  
 
 # 기술 스택
 Front-end: react, typeScript  
@@ -223,7 +224,19 @@ onopen 이벤트가 발생한걸 보니 연결은 된것으로 보인다.
 이전 연습에서 썻던 코드를 가져와서 수정함   
 스프링 시큐리티 적용.  
 jwt filter, service 적용.  
-로그인/ 회원가입 기능 완료.  
+로그인/ 회원가입 기능 완료.
+
+# 환경변수
+dburl - 데이터베이스 url (localhost:3306)  
+db-user - 데이터베이스 id (id)  
+db-pass - 데이터베이스 password (pass)  
+redis-port - 레디스 포트 (8000)  
+redis-host - 레디스 주소 (127.0.0.1)  
+ec2-host - 배포 주소(127.0.0.1)  
+ec2-port - 웹소켓 연결 포트(8000)  
+front-host - 배포 주소(127.0.0.1)  
+front-port - 배포 포트(8000)  
+jwt-key - jwt 시크릿 키 (문자열)
 
 # 작업 중 발생한 에러  
 ERROR 24656 --- [nio-8080-exec-3] o.h.engine.jdbc.spi.SqlExceptionHelper   : Statement.executeQuery() cannot issue statements that do not produce result sets.  
