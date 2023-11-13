@@ -12,20 +12,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # 백엔드 빌드
-    # - name: Set up JDK 11
-    #   uses: actions/setup-java@v2
-    #   with:
-    #     java-version: '11'
-    #     distribution: 'adopt'
+    백엔드 빌드
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
 
-    # - name: Grant execute permission for gradlew
-    #   run: chmod +x back/web/gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x back/web/gradlew
     
-    # - name: Build Spring Boot Project
-    #   run: |
-    #     cd back/web
-    #     ./gradlew build
+    - name: Build Spring Boot Project
+      run: |
+        cd back/web
+        ./gradlew build
 
     # 프론트엔드 빌드
     - name: Set up Node.js
@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.PEM }}
         port: 22
-        source: "front/web/build"
+        source: "back/web/bulid/libs/*.war, front/web/build"
         target: "/home/ec2-user/path/to/remote/directory"
 
     # # 원격 서버에서 배포 스크립트 실행
