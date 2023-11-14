@@ -26,6 +26,17 @@ jobs:
       run: |
         cd back/web
         ./gradlew build
+      env:
+        DBURL: ${{secrets.DBURL}}
+        DB_PASS: ${{secrets.DB_PASS}}
+        DB_USER: ${{secrets.DB_USER}}
+        EC2_HOST: ${{secrets.EC2_HOST}}
+        EC2_PORT: ${{secrets.EC2_PORT}}
+        FRONT_HOST: ${{secrets.FRONT_HOST}}
+        FRONT_PORT: ${{secrets.FRONT_PORT}}
+        JWT_KEY: ${{secrets.JWT_KEY}}
+        REDIS_HOST: ${{secrets.REDIS_HOST}}
+        REDIS_PORT: ${{secrets.REDIS_PORT}}
 
     # 프론트엔드 빌드
     - name: Set up Node.js
