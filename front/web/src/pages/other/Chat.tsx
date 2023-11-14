@@ -55,7 +55,7 @@ function Chat({isLogin}:{isLogin:boolean}) {
     }
 
     useEffect(()=>{
-      axios.get("http://59.28.90.58:8080/api/chat")
+      axios.get("http://13.124.103.146:8080/api/chat")
       .then((response:any)=>{
         console.log(response);
       setChat(response.data)})

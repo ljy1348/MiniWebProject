@@ -9,7 +9,7 @@ function Home({setIsLogin, setIsAdmin}:{setIsLogin:any, setIsAdmin:any}) {
   // 일반회원 sse 테스트용
   const onClickSseUser = () =>{
     const username = "a";
-    axios.get("http://13.124.103.146/api/board/test/"+username)
+    axios.get("http://13.124.103.146:8080/api/board/test/"+username)
     .then((response)=>{console.log(response)})
     .catch((response)=>{console.log(response)});
   }
@@ -17,7 +17,7 @@ function Home({setIsLogin, setIsAdmin}:{setIsLogin:any, setIsAdmin:any}) {
   // 관리자 sse 테스트용
   const onClickSseAdmin = () =>{
     const username = "admin";
-    axios.get("http://13.124.103.146/api/board/test/"+username)
+    axios.get("http://13.124.103.146:8080/api/board/test/"+username)
     .then((response)=>{console.log(response)})
     .catch((response)=>{console.log(response)});
   }
