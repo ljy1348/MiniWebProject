@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-        @Value("${front.local.http}")
+        @Value("http://localhost:3000")
         private String localport;
 
         @Value("${front.proxy.http}")

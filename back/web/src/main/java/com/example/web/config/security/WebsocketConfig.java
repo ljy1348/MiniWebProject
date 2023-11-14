@@ -19,10 +19,10 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes("/app");
     }
 
-    @Value("${ec2.host}")
+    @Value("${EC2_HOST}")
     String host;
 
-    @Value("${front.port}")
+    @Value("${EC2_PORT}")
     String port;
 
     @Override
