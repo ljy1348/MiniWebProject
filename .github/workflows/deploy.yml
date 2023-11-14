@@ -69,7 +69,7 @@ jobs:
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_SSH_KEY }}
+        key: ${{ secrets.PEM }}
         port: 22
         script: |
           cd /home/ec2-user/path/to/remote/directory/back/web/build/libs
