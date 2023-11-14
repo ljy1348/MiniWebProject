@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://${EC2_HOST}:${FRONT_PORT}")
+@CrossOrigin(origins = "http://13.124.103.146")
 public class WebsocketController {
 
     @Autowired

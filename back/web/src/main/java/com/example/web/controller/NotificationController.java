@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://${EC2_HOSt}:${FRONT_PORT}/", allowCredentials = "true")
+@CrossOrigin(origins = "http://13.124.103.146", allowCredentials = "true")
 
 public class NotificationController {
 

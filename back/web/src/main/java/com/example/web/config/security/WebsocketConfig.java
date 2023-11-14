@@ -29,7 +29,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         registry.addEndpoint("/chat")
-                .setAllowedOrigins("http://"+host+":"+port)
+                .setAllowedOrigins("http://13.124.103.146")
                 .withSockJS();
     }
 
