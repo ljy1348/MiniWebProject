@@ -1,7 +1,6 @@
 import IBoard from "../types/board/IBoard";
 import IBoardComment from "../types/board/IBoardComment";
 import Http from "../utils/HttpCommon";
-import Httpt from "../utils/HttpToken";
 
 const getAll = (page:number, size:number) => {
     return Http.get(`/board?page=${page}&size=${size}`);
