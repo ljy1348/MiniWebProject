@@ -13,7 +13,7 @@ function Chat({isLogin}:{isLogin:boolean}) {
     const [input, setInput] = useState("");
     const [stompClient, setStompClient] = useState(new StompJs.Client({
       // SockJS 경로를 brokerURL에 지정
-      brokerURL: 'ws://59.28.90.58:8080/chat/websocket',
+      brokerURL: 'ws://13.124.103.146:8080/chat/websocket',
       connectHeaders: {
         // login: 'ecab7bc0-2a34-0ad6-dada-0a7a074c30fb-53',
       },
