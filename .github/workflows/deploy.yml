@@ -26,6 +26,17 @@ jobs:
       run: |
         cd back/web
         ./gradlew build
+      env:
+        DBURL: database-1.cvc7d9jwqxcz.ap-northeast-2.rds.amazonaws.com
+        DB_PASS: ${{ secrets.DB_PASS }}
+        DB_USER: ${{ secrets.DB_USER }}
+        EC2_HOST: ${{vars.EC2_HOST}}
+        EC2_PORT: ${{vars.EC2_PORT}}
+        FRONT_HOST: ${{vars.FRONT_HOST}}
+        FRONT_PORT: ${{vars.FRONT_PORT}}
+        JWT_KEY: ${{secrets.JWT_KEY}}
+        REDIS_HOST: ${{vars.REDIS_HOST}}
+        REDIS_PORT: ${{vars.REDIS_PORT}}
 
     # 프론트엔드 빌드
     - name: Set up Node.js
@@ -38,6 +49,8 @@ jobs:
         cd front/web
         npm install
         npm run build
+      env:
+        CI: false
 
     # AWS EC2 서버로 파일 전송
     - name: Copy files to EC2
@@ -47,8 +60,8 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.PEM }}
         port: 22
-        source: "back/build/libs/*.jar, front/build"
-        target: "/path/to/remote/directory"
+        source: "back/web/build/libs/*.war, front/web/build"
+        target: "/home/ec2-user/path/to/remote/directory"
 
     # # 원격 서버에서 배포 스크립트 실행
     # - name: Execute deployment script
