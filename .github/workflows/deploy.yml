@@ -63,13 +63,18 @@ jobs:
         source: "back/web/build/libs/*.war, front/web/build"
         target: "/home/ec2-user/path/to/remote/directory"
 
-    # # 원격 서버에서 배포 스크립트 실행
-    # - name: Execute deployment script
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.EC2_HOST }}
-    #     username: ${{ secrets.EC2_USERNAME }}
-    #     key: ${{ secrets.EC2_SSH_KEY }}
-    #     port: 22
-    #     script: |
-    #       # 백엔드 및 프론트엔드 배포 스크립트
+    # 원격 서버에서 배포 스크립트 실행
+    - name: Execute deployment script
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          cd /home/ec2-user/path/to/remote/directory/back/web/build/libs
+          mv web-0.0.1-SNAPSHOT.war /home/ec2-user/apache-tomcat-9.0.80/webapps/ROOT.war
+          sudo /home/ec2-user/apache-tomcat-9.0.80/bin/shutdown.sh
+          sudo /home/ec2-user/apache-tomcat-9.0.80/bin/startup.sh
+          sudo systemctl restart nginx
+          
