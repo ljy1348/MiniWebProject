@@ -27,7 +27,7 @@ jobs:
         cd back/web
         ./gradlew build
       env:
-        DBURL: ${{ secrets.DBURL }}
+        DBURL: database-1.cvc7d9jwqxcz.ap-northeast-2.rds.amazonaws.com
         DB_PASS: ${{ secrets.DB_PASS }}
         DB_USER: ${{ secrets.DB_USER }}
         EC2_HOST: ${{vars.EC2_HOST}}
