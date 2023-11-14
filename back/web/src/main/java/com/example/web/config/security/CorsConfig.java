@@ -9,17 +9,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-        @Value("http://localhost")
-        private String localport;
+    @Value("http://localhost:3000")
+    private String localport;
 
-    @Value("http://${FRONT_HOST}")
+    @Value("http://${FRONT_HOST}:80")
     private String frontHost;
 
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(localport,frontHost) // React 앱의 주소
+                .allowedOrigins("*") // React 앱의 주소
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS") // 허용할 HTTP 메서드
                 .allowedHeaders("*")
                 .exposedHeaders("*");
