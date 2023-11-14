@@ -26,17 +26,6 @@ jobs:
       run: |
         cd back/web
         ./gradlew build
-      env:
-        DBURL: database-1.cvc7d9jwqxcz.ap-northeast-2.rds.amazonaws.com
-        DB_PASS: ${{ secrets.DB_PASS }}
-        DB_USER: ${{ secrets.DB_USER }}
-        EC2_HOST: ${{vars.EC2_HOST}}
-        EC2_PORT: ${{vars.EC2_PORT}}
-        FRONT_HOST: ${{vars.FRONT_HOST}}
-        FRONT_PORT: ${{vars.FRONT_PORT}}
-        JWT_KEY: ${{secrets.JWT_KEY}}
-        REDIS_HOST: ${{vars.REDIS_HOST}}
-        REDIS_PORT: ${{vars.REDIS_PORT}}
 
     # 프론트엔드 빌드
     - name: Set up Node.js
@@ -74,7 +63,7 @@ jobs:
         script: |
           cd /home/ec2-user/path/to/remote/directory/back/web/build/libs
           mv web-0.0.1-SNAPSHOT.war /home/ec2-user/apache-tomcat-9.0.80/webapps/ROOT.war
+          sudo systemctl restart nginx
           sudo /home/ec2-user/apache-tomcat-9.0.80/bin/shutdown.sh
           sudo /home/ec2-user/apache-tomcat-9.0.80/bin/startup.sh
-          sudo systemctl restart nginx
           
