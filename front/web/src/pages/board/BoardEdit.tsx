@@ -17,7 +17,6 @@ function BoardEdit({setIsLogin} : {setIsLogin:React.Dispatch<React.SetStateActio
   const {bid} = useParams();
   const navi = useNavigate();
 
-
     // page 로딩 될 때 로그인 확인(토큰 만료 확인)
     useEffect(()=>{
       if (!UserService.isTokenExp()) {

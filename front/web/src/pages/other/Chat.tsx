@@ -5,6 +5,7 @@ import * as StompJs from "@stomp/stompjs";
 import UserService from '../../services/auth/UserService';
 import IChat from '../../types/other/IChat';
 import axios from 'axios';
+import HttpCommon from '../../utils/HttpCommon';
 
 
 function Chat({isLogin}:{isLogin:boolean}) {
@@ -13,7 +14,7 @@ function Chat({isLogin}:{isLogin:boolean}) {
     const [input, setInput] = useState("");
     const [stompClient, setStompClient] = useState(new StompJs.Client({
       // SockJS 경로를 brokerURL에 지정
-      brokerURL: 'ws://13.124.103.146:8080/chat/websocket',
+      brokerURL: `ws://${process.env.REACT_APP_BACK_HOST}/chat/websocket`,
       connectHeaders: {
         // login: 'ecab7bc0-2a34-0ad6-dada-0a7a074c30fb-53',
       },
@@ -55,7 +56,7 @@ function Chat({isLogin}:{isLogin:boolean}) {
     }
 
     useEffect(()=>{
-      axios.get("http://13.124.103.146:8080/api/chat")
+      HttpCommon.get("/chat")
       .then((response:any)=>{
         console.log(response);
       setChat(response.data)})

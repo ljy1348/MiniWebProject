@@ -77,8 +77,8 @@ export function Payment() {
           5,000원 할인 쿠폰 적용
         </label>
       </div>
-      <div id="payment-widget" />
-      <div id="agreement" />
+      <div id="payment-widget"/>
+      <div id="agreement" style={{backgroundColor:"black"}}/>
       <button
         onClick={async () => {
           const paymentWidget = paymentWidgetRef.current 

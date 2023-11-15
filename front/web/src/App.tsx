@@ -38,7 +38,7 @@ function App() {
     // 로그인 하면 sse연결하기
     if (isLogin) {
       const username = UserService.getUserName();
-      eventSource.current = new EventSource(`http://13.124.103.146:8080/api/notification?username=${username}`, { withCredentials: true });
+      eventSource.current = new EventSource(`http://${process.env.REACT_APP_BACK_HOST}/api/notification?username=${username}`, { withCredentials: true });
       // sse로 메세지 수신 될때 실행
     eventSource.current.onmessage = (event) => {
       setNotificationMessage(event.data);
