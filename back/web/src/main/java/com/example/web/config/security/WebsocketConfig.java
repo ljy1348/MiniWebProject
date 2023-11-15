@@ -30,6 +30,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
         registry.addEndpoint("/chat")
                 .setAllowedOriginPatterns("http://"+host+":*")
+                .setAllowedOrigins("http://"+host)
                 .withSockJS();
     }
 
