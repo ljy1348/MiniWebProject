@@ -34,7 +34,7 @@ jobs:
         node-version: '18' # 필요한 Node.js 버전
 
     - name: Create .env file
-      run: echo REACT_APP_BACK_URL=${{ vars.EC2_HOST }}:8080 >> front/web/.env
+      run: echo REACT_APP_BACK_HOST=${{ vars.EC2_HOST }}:8080 >> front/web/.env
       
     - name: Build React Project
       run: |
