@@ -64,9 +64,9 @@ jobs:
         key: ${{ secrets.PEM }}
         port: 22
         script: |
-          cd /home/ec2-user/path/to/remote/directory/back/web/build/libs
-          sudo systemctl restart nginx
           sudo /home/ec2-user/apache-tomcat-9.0.80/bin/shutdown.sh
+          cd /home/ec2-user/path/to/remote/directory/back/web/build/libs
           mv web-0.0.1-SNAPSHOT.war /home/ec2-user/apache-tomcat-9.0.80/webapps/ROOT.war
+          sudo systemctl restart nginx
           sudo /home/ec2-user/apache-tomcat-9.0.80/bin/startup.sh
           
