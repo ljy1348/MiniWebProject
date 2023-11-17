@@ -44,8 +44,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query(value = "SELECT BID," +
             "TITLE, WRITER, INSERT_TIME as insertTime, VIEWS, COMMENT_COUNT as commentCount," +
-            "VOTE, IS_PIN as isPin,IS_FILE as isFile,IMG_FID as imgFid FROM BOARD WHERE DELETE_YN = 'Y' ORDER BY DELETE_TIME DESC",
-            countQuery = "SELECT count(*) FROM BOARD WHERE DELETE_YN = 'Y'",
+            "VOTE, IS_PIN as isPin,IS_FILE as isFile,IMG_FID as imgFid FROM board WHERE DELETE_YN = 'Y' ORDER BY DELETE_TIME DESC",
+            countQuery = "SELECT count(*) FROM board WHERE DELETE_YN = 'Y'",
             nativeQuery = true)
     Page<BoardListDto> findAllByDeleteYN(Pageable pageable);
 

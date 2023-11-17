@@ -74,8 +74,8 @@ public class BoardService {
             if (optional.isPresent()) {
                 if (optional.get().getWriter().equals(auth.getName()) || isAdmin) {
 
+
             boardRepository.deleteById(bid);
-//            boardCommentRepository.deleteAllByBid(bid);
             return true;
                 } else {
                     return false;

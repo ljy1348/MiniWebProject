@@ -34,7 +34,7 @@ import javax.persistence.*;
 @DynamicUpdate
 // soft delete
 @Where(clause = "DELETE_YN = 'N'")
-@SQLDelete(sql = "UPDATE BOARD SET DELETE_YN = 'Y', DELETE_TIME=NOW() WHERE BID = ?")
+@SQLDelete(sql = "UPDATE board SET DELETE_YN = 'Y', DELETE_TIME=NOW() WHERE BID = ?")
 public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
