@@ -43,7 +43,7 @@ public class FileController {
             log.info("이미지 업로드 3");
 
             // 다운로드 URL 생성
-            String customHost = "http://59.28.90.58:8080";
+            String customHost = "http://54.180.87.66:8080";
             String downloadUrl = customHost + "/api/img/" + savedFile.getFid().toString();
 //
 //            String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()

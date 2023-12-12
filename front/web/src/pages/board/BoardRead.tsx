@@ -92,7 +92,7 @@ function BoardRead() {
     {
       fileList && fileList.map((data, idx)=>{
       return (  <tr key={idx}>
-      <th className='text-start' colSpan={2}>첨부파일 : <a href={"http://localhost:8080/api/img/"+data.fid} download>{data.fileName}</a></th>
+      <th className='text-start' colSpan={2}>첨부파일 : <a href={"http://54.180.87.66:8080/api/img/"+data.fid} download>{data.fileName}</a></th>
     </tr>)
       })
     }
